@@ -1,27 +1,27 @@
 package com.testevr.dao;
 
-import com.testevr.model.ClienteModel;
-import java.util.List;
+import com.testevr.model.ProdutoModel;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
  * @author Diego Barbosa
  */
-public class ClienteDao extends GenericDao<ClienteModel> {
-
-    public ClienteDao() {
-        super(ClienteModel.class);
+public class ProdutoDao extends GenericDao<ProdutoModel> {
+    
+    public ProdutoDao() {
+        super(ProdutoModel.class);
     }
-
-    public List<ClienteModel> retornarListaClienteNome(String nome) {
+    
+    public List<ProdutoModel> retornarListaProdutoNome(String nome) {
         try {
-            List<ClienteModel> listaClientes = entityManager
-                    .createQuery("SELECT u FROM clientes u WHERE u.nomeCliente LIKE :nome", ClienteModel.class)
+            List<ProdutoModel> listaProdutos = entityManager
+                    .createQuery("SELECT u FROM produtos u WHERE u.descricaoProduto LIKE :nome", ProdutoModel.class)
                     .setParameter("nome", "%" + nome + "%")
                     .getResultList();
-            return listaClientes;
+            return listaProdutos;
         } catch (NoResultException | NonUniqueResultException e) {
             JOptionPane.showMessageDialog(null, "Não foi possível retornar resultado para consulta");
         } catch (Exception e) {
@@ -30,15 +30,15 @@ public class ClienteDao extends GenericDao<ClienteModel> {
         return null;
     }
 
-    public ClienteModel retornarClienteNome(String nome) {
-        ClienteModel clienteModel = new ClienteModel();
+    public ProdutoModel retornarProdutoNome(String nome) {
+        ProdutoModel produtoModel = new ProdutoModel();
         try {
-            clienteModel = entityManager
-                    .createQuery("SELECT u FROM clientes u WHERE u.nomeCliente LIKE :nome", ClienteModel.class)
+            produtoModel = entityManager
+                    .createQuery("SELECT u FROM produtos u WHERE u.descricaoProduto LIKE :nome", ProdutoModel.class)
                     .setParameter("nome", "%" + nome + "%")
                     .setMaxResults(1)
                     .getSingleResult();
-            return clienteModel;
+            return produtoModel;
         } catch (NoResultException | NonUniqueResultException e) {
             JOptionPane.showMessageDialog(null, "Não foi possível localizar resultado para consulta");
         } catch (Exception e) {
@@ -46,5 +46,5 @@ public class ClienteDao extends GenericDao<ClienteModel> {
         }
         return null;
     }
-
+    
 }

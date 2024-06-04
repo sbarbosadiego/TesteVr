@@ -1,7 +1,8 @@
 package com.testevr.dao;
 
-import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -9,14 +10,13 @@ import javax.swing.JOptionPane;
  * @author Diego Barbosa
  */
 public class GenericDao<T> extends Conexao {
-    
+
     private final Class<T> classe;
-    
+
     public GenericDao(Class<T> classe) {
         this.classe = classe;
     }
 
-    
     public int salvar(T classe) {
         try {
             entityManager.getTransaction().begin();
@@ -28,7 +28,7 @@ public class GenericDao<T> extends Conexao {
             return 0;
         }
     }
-    
+
     public boolean atualizar(T classe) {
         try {
             entityManager.getTransaction().begin();
@@ -40,7 +40,7 @@ public class GenericDao<T> extends Conexao {
             return false;
         }
     }
-    
+
     public boolean excluir(Long id) {
         T entity = null;
         try {
@@ -56,7 +56,12 @@ public class GenericDao<T> extends Conexao {
             return false;
         }
     }
-    
+
+    /**
+     * Realiza a consulta ao banco de dados e retorna um único registro.
+     * @param id
+     * @return entity
+     */
     public T retornar(Long id) {
         T entity = null;
         try {
@@ -69,10 +74,20 @@ public class GenericDao<T> extends Conexao {
         return entity;
     }
     
+    /**
+     * Retorna uma lista com todos os registros da tabela.
+     * @return 
+     */
     public List<T> retornarLista() {
-        String jpql = "select t from " + classe.getName() + " t";
-        TypedQuery<T> query = entityManager.createQuery(jpql, classe);        
-        return query.getResultList();
+        String jpql = "SELECT t FROM " + classe.getName() + " t";
+        TypedQuery<T> query = entityManager.createQuery(jpql, classe);
+        try {
+            List<T> lista = query.getResultList();
+            return lista;
+        } catch (PersistenceException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
     
 }
