@@ -39,7 +39,7 @@ public class ClienteModelTest {
             cliente.setNomeCliente(nomeVazio);
             fail("Esperava uma ClienteException");
         } catch (ClienteException e) {
-            assertEquals("O nome do cliente nao foi informado!", e.getMessage());
+            assertEquals("O nome do cliente não foi informado!", e.getMessage());
         }
     }
 

@@ -8,12 +8,14 @@ import java.util.Locale;
  * @author Diego Barbosa
  */
 public class FormataValorReal {
-    
-    static Locale localeBR = new Locale("pt","BR");
+
+    static Locale localeBR = new Locale("pt", "BR");
     static NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
-    
+
     /**
-     * Método para formatar um objeto do tipo string para double, e retornar o valor formatado em real.
+     * Método para formatar um objeto do tipo string para double, e retornar o
+     * valor formatado em real.
+     *
      * @param valorTexto
      * @return valorReal
      */
@@ -28,9 +30,10 @@ public class FormataValorReal {
         }
         return valorReal.format(valor);
     }
-    
+
     /**
      * Método que formata um valor double para real.
+     *
      * @param valorDouble
      * @return valorReal
      */
@@ -38,9 +41,10 @@ public class FormataValorReal {
         double valor = valorDouble;
         return valorReal.format(valor);
     }
-    
+
     /**
      * Método para converter um objeto string em double e retornar o mesmo.
+     *
      * @param valorTexto
      * @return valor
      */
@@ -55,5 +59,5 @@ public class FormataValorReal {
         }
         return valor;
     }
-               
+
 }

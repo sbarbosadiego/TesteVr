@@ -17,8 +17,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@Entity
-@Table(name = "clientes")
+@Entity(name = "clientes")
 public class ClienteModel implements Serializable {
 
     @Id
@@ -39,7 +38,7 @@ public class ClienteModel implements Serializable {
         if (nome.length() >= 100) {
             throw new ClienteException("O nome do cliente ultrapassa o limite de 100 caracteres!");
         } else if (nome.isEmpty()) {
-            throw new ClienteException("O nome do cliente nao foi informado!");
+            throw new ClienteException("O nome do cliente não foi informado!");
         }
         this.nomeCliente = nome;
     }
@@ -50,11 +49,12 @@ public class ClienteModel implements Serializable {
         }
         this.limiteCompra = limiteCompra;
     }
-
+    
     public void setDiaFechamentoFatura(LocalDate diaFechamentoFatura) {
-        int dia = diaFechamentoFatura.getDayOfMonth();
-        if (dia < 1 || dia > diaFechamentoFatura.lengthOfMonth()) {
-            throw new IllegalArgumentException("Informe um valor correto para o dia de fechamento");
+        // Validar se o dia de fechamento está dentro do intervalo válido para o mês
+        int maxDayOfMonth = diaFechamentoFatura.lengthOfMonth();
+        if (diaFechamentoFatura.getDayOfMonth() < 1 || diaFechamentoFatura.getDayOfMonth() > maxDayOfMonth) {
+            throw new IllegalArgumentException("Dia de fechamento inválido para o mês atual.");
         }
         this.diaFechamentoFatura = diaFechamentoFatura;
     }

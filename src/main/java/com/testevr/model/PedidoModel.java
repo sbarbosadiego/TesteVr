@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,8 +20,7 @@ import lombok.Data;
  * @author Diego Barbosa
  */
 @Data
-@Entity
-@Table(name = "pedidos")
+@Entity(name = "pedidos")
 public class PedidoModel implements Serializable {
 
     @Id
@@ -42,8 +40,8 @@ public class PedidoModel implements Serializable {
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
     List<ItemPedidoModel> listaItens = new ArrayList<>();
-    
-    public PedidoModel(){
+
+    public PedidoModel() {
         this.valorPedido = 0.0;
     }
 
@@ -53,16 +51,20 @@ public class PedidoModel implements Serializable {
         }
         this.valorPedido = valorPedido;
     }
-    
+
     public void adicionarItem(ItemPedidoModel item) {
-        item.setPedido(this);
-        //this.valorPedido += item.getValorTotal();
+        item.setPedido(this); // Define a referência do pedido no item
         this.listaItens.add(item);
     }
-    
-    public void removerItem(int index){
-        ItemPedidoModel lista = this.listaItens.get(index);
+
+    public void removerItem(int index) {
         this.listaItens.remove(index);
+    }
+
+    public void adicionarItens(List<ItemPedidoModel> itens) {
+        for (ItemPedidoModel item : itens) {
+            adicionarItem(item);
+        }
     }
 
 }

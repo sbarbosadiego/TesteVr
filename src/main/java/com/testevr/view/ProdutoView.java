@@ -15,7 +15,7 @@ public class ProdutoView extends javax.swing.JFrame {
     // Data
     Locale localeBR = new Locale("pt", "BR");
     NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
-    
+
     // Aluno
     ProdutoModel produtoModel = new ProdutoModel();
     ProdutoController produtoController = new ProdutoController();

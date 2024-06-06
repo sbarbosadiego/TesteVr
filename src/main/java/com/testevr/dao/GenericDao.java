@@ -59,6 +59,7 @@ public class GenericDao<T> extends Conexao {
 
     /**
      * Realiza a consulta ao banco de dados e retorna um único registro.
+     *
      * @param id
      * @return entity
      */
@@ -73,10 +74,11 @@ public class GenericDao<T> extends Conexao {
         }
         return entity;
     }
-    
+
     /**
      * Retorna uma lista com todos os registros da tabela.
-     * @return 
+     *
+     * @return
      */
     public List<T> retornarLista() {
         String jpql = "SELECT t FROM " + classe.getName() + " t";
@@ -89,5 +91,5 @@ public class GenericDao<T> extends Conexao {
             return Collections.emptyList();
         }
     }
-    
+
 }

@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import java.io.Serializable;
 import lombok.Data;
@@ -17,8 +16,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@Entity
-@Table(name = "produtos")
+@Entity(name = "produtos")
 public class ProdutoModel implements Serializable {
 
     @Id
@@ -41,7 +39,7 @@ public class ProdutoModel implements Serializable {
         }
         this.descricaoProduto = nome;
     }
-    
+
     public void setValorProduto(Double valorProduto) {
         if (valorProduto < 0) {
             throw new IllegalArgumentException("O valor do produto não pode ser negativo!");

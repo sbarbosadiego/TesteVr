@@ -18,7 +18,7 @@ public class Conexao {
             throw new RuntimeException("Erro ao conectar ao banco de dados.", e);
         }
     }
-    
+
     protected EntityManager entityManager = factory.createEntityManager();
 
 }

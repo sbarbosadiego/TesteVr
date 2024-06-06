@@ -10,11 +10,11 @@ import javax.swing.JOptionPane;
  * @author Diego Barbosa
  */
 public class ProdutoDao extends GenericDao<ProdutoModel> {
-    
+
     public ProdutoDao() {
         super(ProdutoModel.class);
     }
-    
+
     public List<ProdutoModel> retornarListaProdutoNome(String nome) {
         try {
             List<ProdutoModel> listaProdutos = entityManager
@@ -46,5 +46,5 @@ public class ProdutoDao extends GenericDao<ProdutoModel> {
         }
         return null;
     }
-    
+
 }

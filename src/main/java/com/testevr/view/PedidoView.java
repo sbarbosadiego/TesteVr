@@ -4,10 +4,21 @@
  */
 package com.testevr.view;
 
+import com.testevr.controller.ClienteController;
+import com.testevr.controller.ItemPedidoController;
+import com.testevr.controller.PedidoController;
+import com.testevr.controller.ProdutoController;
+import com.testevr.model.ClienteModel;
+import com.testevr.model.ItemPedidoModel;
+import com.testevr.model.PedidoModel;
+import com.testevr.model.ProdutoModel;
+import com.testevr.util.FormataValorReal;
 import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -20,30 +31,30 @@ public class PedidoView extends javax.swing.JFrame {
 
     // Idioma - Data
     Locale localeBR = new Locale("pt", "BR");
-    FormataDatas datas = new FormataDatas();
+    LocalDateTime dataAtual = LocalDateTime.now();
+    //FormataDatas datas = new FormataDatas();
 
     // Cliente
-    ModelCliente modelCliente = new ModelCliente();
-    ControllerCliente controllerCliente = new ControllerCliente();
-    ArrayList<ModelCliente> listaModelCliente = new ArrayList<>();
+    ClienteModel clienteModel = new ClienteModel();
+    ClienteController clienteController = new ClienteController();
+    ArrayList<ClienteModel> listaClienteModel = new ArrayList<>();
 
     // Produtos
-    ModelProdutos modelProdutos = new ModelProdutos();
-    ControllerProduto controllerProduto = new ControllerProduto();
-    ArrayList<ModelProdutos> listaModelProdutos = new ArrayList<>();
+    ProdutoModel produtoModel = new ProdutoModel();
+    ProdutoController produtoController = new ProdutoController();
+    ArrayList<ProdutoModel> listaProdutosModel = new ArrayList<>();
 
-    // Venda
-    ModelVendas modelVendas = new ModelVendas();
-    ControllerVenda controllerVendas = new ControllerVenda();
+    // Pedido
+    PedidoModel pedidoModel = new PedidoModel();
+    PedidoController pedidoController = new PedidoController();
 
-    // Venda Produtos
-    ModelVendaProduto modelVendaProdutos = new ModelVendaProduto();
-    ControllerVendaProduto controllerVendaProdutos = new ControllerVendaProduto();
-    ArrayList<ModelVendaProduto> listaModelVendaProdutos = new ArrayList<>();
+    // Item Pedido
+    ItemPedidoModel itemPedidoModel = new ItemPedidoModel();
+    ItemPedidoController itemPedidoController = new ItemPedidoController();
+    ArrayList<ItemPedidoModel> listaItensPedido = new ArrayList<>();
 
-    // Venda Clientes
-    ControllerVendasCliente controllerVendasCliente = new ControllerVendasCliente();
-    ArrayList<ModelVendasCliente> listalModelVendasClientes = new ArrayList<>();
+    // Tela
+    private MainView mainView;
 
     DefaultListModel modelo;
     int Enter = 0;
@@ -51,8 +62,9 @@ public class PedidoView extends javax.swing.JFrame {
     /**
      * Creates new form ViewVendas
      */
-    public PedidoView() {
+    public PedidoView(MainView mainView) {
         initComponents();
+        this.mainView = mainView;
         modelo = new DefaultListModel();
         listaPesquisarCliente.setVisible(false);
         listaPesquisarProduto.setVisible(false);
@@ -60,8 +72,11 @@ public class PedidoView extends javax.swing.JFrame {
         listaPesquisarProduto.setModel(modelo);
         listarPesquisaClientes();
         listarPesquisaProdutos();
-        listarVendasClientes();
         habilitarDesabilitarCampos(false);
+    }
+
+    public PedidoView() {
+
     }
 
     /**
@@ -244,9 +259,6 @@ public class PedidoView extends javax.swing.JFrame {
             }
         });
         jtProdutosVenda.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtProdutosVendaKeyPressed(evt);
-            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jtProdutosVendaKeyReleased(evt);
             }
@@ -388,7 +400,6 @@ public class PedidoView extends javax.swing.JFrame {
             modeloCadastro.removeRow(linha);
             somaValorTotalProdutos();
         }
-
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void jtfCodigoClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfCodigoClienteKeyReleased
@@ -403,6 +414,7 @@ public class PedidoView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtfCodigoClienteKeyReleased
 
+
     private void jtProdutosVendaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtProdutosVendaKeyReleased
         editarQuantidadeProdutoTabela();
     }//GEN-LAST:event_jtProdutosVendaKeyReleased
@@ -410,7 +422,7 @@ public class PedidoView extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         DefaultTableModel tabela = (DefaultTableModel) jtProdutosVenda.getModel();
         if (tabela.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Não há produtos na pré-venda!", "ATENÇÃO",
+            JOptionPane.showMessageDialog(this, "Não há produtos no pedido!", "ATENÇÃO",
                     JOptionPane.WARNING_MESSAGE);
         } else {
             salvarVenda();
@@ -475,11 +487,11 @@ public class PedidoView extends javax.swing.JFrame {
      * Lista os clientes na pesquisa dinâmica.
      */
     private void listarPesquisaClientes() {
-        String nomeCliente = campoPesquisaCliente.getText();
-        listaModelCliente = controllerCliente.retornarListarPesquisaClientesController(nomeCliente);
+        String nomeCliente = campoPesquisaCliente.getText().toUpperCase();
+        listaClienteModel = (ArrayList<ClienteModel>) clienteController.retornarListaClienteNomeController(nomeCliente);
         modelo.removeAllElements();
-        for (int c = 0; c < listaModelCliente.size(); c++) {
-            modelo.addElement(listaModelCliente.get(c).getClienteNome());
+        for (int c = 0; c < listaClienteModel.size(); c++) {
+            modelo.addElement(listaClienteModel.get(c).getNomeCliente());
         }
         if (campoPesquisaCliente.getText().isEmpty()) {
             listaPesquisarCliente.setVisible(false);
@@ -489,35 +501,14 @@ public class PedidoView extends javax.swing.JFrame {
     }
 
     /**
-     * Listar vendas.
-     */
-    private void listarVendasClientes() {
-        listalModelVendasClientes = controllerVendasCliente.retornaListaVendasClientesController();
-        DefaultTableModel tabela = (DefaultTableModel) jtVendas.getModel();
-        tabela.setNumRows(0);
-
-        NumberFormat total = NumberFormat.getCurrencyInstance(localeBR);
-
-        int contador = listalModelVendasClientes.size();
-        for (int c = 0; c < contador; c++) {
-            tabela.addRow(new Object[]{
-                listalModelVendasClientes.get(c).getModelVenda().getIdVenda(),
-                listalModelVendasClientes.get(c).getModelCliente().getClienteNome(),
-                total.format(listalModelVendasClientes.get(c).getModelVenda().getVendaValorLiquido()),
-                listalModelVendasClientes.get(c).getModelVenda().getVendaData()
-            });
-        }
-    }
-
-    /**
      * Lista os produtos na pesquisa dinâmica.
      */
     private void listarPesquisaProdutos() {
-        String nomeProduto = campoPesquisaProduto.getText();
-        listaModelProdutos = controllerProduto.retornarListarPesquisaProdutosController(nomeProduto);
+        String nomeProduto = campoPesquisaProduto.getText().toUpperCase();
+        listaProdutosModel = (ArrayList<ProdutoModel>) produtoController.retornarListaProdutoController(nomeProduto);
         modelo.removeAllElements();
-        for (int c = 0; c < listaModelProdutos.size(); c++) {
-            modelo.addElement(listaModelProdutos.get(c).getProdutoNome());
+        for (int c = 0; c < listaProdutosModel.size(); c++) {
+            modelo.addElement(listaProdutosModel.get(c).getDescricaoProduto());
         }
         if (campoPesquisaProduto.getText().isEmpty()) {
             listaPesquisarProduto.setVisible(false);
@@ -532,8 +523,8 @@ public class PedidoView extends javax.swing.JFrame {
     private void recuperarPesquisaCliente() {
         String nome = listaPesquisarCliente.getSelectedValue();
         campoPesquisaCliente.setText(nome);
-        modelCliente = controllerCliente.retornarClienteNomeController(nome);
-        jtfCodigoCliente.setValue(modelCliente.getIdCliente());
+        clienteModel = clienteController.retornarClienteNomeController(nome);
+        jtfCodigoCliente.setValue(clienteModel.getCodigoCliente());
     }
 
     /**
@@ -542,40 +533,28 @@ public class PedidoView extends javax.swing.JFrame {
     private void recuperarPesquisaProduto() {
         String produto = listaPesquisarProduto.getSelectedValue();
         campoPesquisaProduto.setText(produto);
-        modelProdutos = controllerProduto.retornarProdutoNomeController(produto);
-        jtfCodigoProduto.setText(String.valueOf(modelProdutos.getIdProduto()));
+        produtoModel = produtoController.retornarProdutoNomeController(produto);
+        jtfCodigoProduto.setText(String.valueOf(produtoModel.getCodigoProduto()));
     }
 
-    /**
-     * Recupera informações do cliente pelo código.
-     */
     private void recuperarClienteCodigo() {
         int codigo = Integer.parseInt(jtfCodigoCliente.getText());
-        modelCliente = controllerCliente.retornarClienteController(codigo);
-        campoPesquisaCliente.setText(modelCliente.getClienteNome());
+        clienteModel = clienteController.retornarClienteController((long) codigo);
+        campoPesquisaCliente.setText(clienteModel.getNomeCliente());
     }
 
-    /**
-     * Recupera informações do produto pelo código.
-     */
     private void recuperarProdutoCodigo() {
         int codigo = Integer.parseInt(jtfCodigoProduto.getText());
-        modelProdutos = controllerProduto.retornarProdutoController(codigo);
-        campoPesquisaProduto.setText(modelProdutos.getProdutoNome());
+        produtoModel = produtoController.retornarProdutoController((long) codigo);
+        campoPesquisaProduto.setText(produtoModel.getDescricaoProduto());
     }
 
-    /**
-     * Método para limpar campos do produto e quantidade.
-     */
     private void limparCamposProduto() {
         jtfCodigoProduto.setText("");
         campoPesquisaProduto.setText("");
         jtfQuantidade.setText("");
     }
 
-    /**
-     * Limpar tela de cadastro.
-     */
     private void limparTela() {
         jtfCodigoCliente.setText("");
         campoPesquisaCliente.setText("");
@@ -583,7 +562,6 @@ public class PedidoView extends javax.swing.JFrame {
         campoPesquisaProduto.setText("");
         jtfQuantidade.setText("");
         jtfValorTotal.setText("");
-        jtfDesconto.setText("");
         jtfCodigoVenda.setText("");
         DefaultTableModel tabela = (DefaultTableModel) jtProdutosVenda.getModel();
         tabela.setNumRows(0);
@@ -596,14 +574,10 @@ public class PedidoView extends javax.swing.JFrame {
         campoPesquisaProduto.setEnabled(condicao);
         jtfQuantidade.setEnabled(condicao);
         jtfValorTotal.setEnabled(condicao);
-        jtfDesconto.setEnabled(condicao);
         jtfCodigoVenda.setEnabled(condicao);
         btnAdicionar.setEnabled(condicao);
     }
 
-    /**
-     * Realiza a soma do valor líquido dos produtos.
-     */
     private void somaValorTotalProdutos() {
         double somaTotal = 0, valor;
         int contador = jtProdutosVenda.getRowCount();
@@ -621,100 +595,68 @@ public class PedidoView extends javax.swing.JFrame {
         }
 
         jtfValorTotal.setText(valorReal.format(somaTotal));
-        try {
-            descontoVenda();
-        } catch (NumberFormatException e) {
-
-        }
     }
 
-    /**
-     * Aplicar desconto no valor total da venda.
-     */
-    private void descontoVenda() {
-        NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
-        String valorString = jtfValorTotal.getText();
-        double valorTotal = 0;
-        double desconto = Double.parseDouble(jtfDesconto.getText());
-        try {
-            Number number = valorReal.parse(valorString);
-            valorTotal = number.doubleValue();
-            valorTotal = valorTotal - (valorTotal * (desconto / 100));
-        } catch (ParseException e) {
-            System.out.println("Erro ao converter o valor: " + e.getMessage());
-        }
-        jtfValorTotal.setText(valorReal.format(valorTotal));
-    }
-
-    /**
-     * Método para salvar o registro de uma pré-venda.
-     */
     private void salvarVenda() {
-        int codigoVenda = 0;
-        
         try {
             if (jtfCodigoCliente.getText().isBlank()) {
-                // Ao não ser informado o cliente será atribuído null no banco de dados
-            } else {
-                modelVendas.setCliente(Integer.parseInt(jtfCodigoCliente.getText()));
+                JOptionPane.showMessageDialog(null, "Cliente não informado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+                return;
             }
-            modelVendas.setVendaData(datas.converterDataParaDateUS(new java.util.Date(System.currentTimeMillis())));
-            modelVendas.setVendaValorLiquido(FormataValorReal.retornarRealDouble(jtfValorTotal.getText()));
+            // Recuperar o cliente
+            Long codigoCliente = Long.parseLong(jtfCodigoCliente.getText());
+            ClienteModel clienteModel = clienteController.retornarClienteController(codigoCliente);
+            if (clienteModel == null) {
+                JOptionPane.showMessageDialog(null, "Cliente não encontrado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-            if (jtfDesconto.getText().isBlank()) {
-                modelVendas.setVendaDesconto(0.00);
-                modelVendas.setVendaValorBruto(FormataValorReal.retornarRealDouble(jtfValorTotal.getText()));
+            // Criar e preencher o PedidoModel
+            PedidoModel pedidoModel = new PedidoModel();
+            pedidoModel.setCliente(clienteModel);
+            pedidoModel.setDataPedido(dataAtual);
+            pedidoModel.setValorPedido(FormataValorReal.retornarRealDouble(jtfValorTotal.getText()));
+
+            // Preparar e adicionar os itens ao PedidoModel
+            List<ItemPedidoModel> listaItensPedido = prepararItensPedido(pedidoModel);
+            pedidoModel.adicionarItens(listaItensPedido);
+
+            // Salvar o pedido com os itens
+            int codigoVenda = pedidoController.salvarPedidoController(pedidoModel);
+            if (codigoVenda > 0) {
+                pedidoModel.setCodigoPedido((long) codigoVenda);
+                JOptionPane.showMessageDialog(this, "Pedido salvo com sucesso", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
+                limparTela();
+                mainView.listarPedidos();
             } else {
-                modelVendas.setVendaDesconto(Double.valueOf(jtfDesconto.getText()));
-                double desconto = 100.00 - Double.parseDouble(jtfDesconto.getText());
-                modelVendas.setVendaValorBruto((FormataValorReal.retornarRealDouble(jtfValorTotal.getText()) * 100) / desconto);
+                JOptionPane.showMessageDialog(this, "Código de venda gerado inválido", "ERRO", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        codigoVenda = controllerVendas.salvarVendaController(modelVendas);
-
-        if (codigoVenda > 0) {
-            salvarVendasProdutos(codigoVenda);
-        } else {
-            JOptionPane.showMessageDialog(this, "Código de venda gerado inválido", "ERRO",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao salvar venda", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    /**
-     * Método para salvar os produtos da pré-venda.
-     * @param codigoVenda 
-     */
-    private void salvarVendasProdutos(int codigoVenda) {
-        listaModelVendaProdutos = new ArrayList<>();
-        int idVenda = codigoVenda;
+
+    private List<ItemPedidoModel> prepararItensPedido(PedidoModel pedidoModel) {
+        List<ItemPedidoModel> listaItensPedido = new ArrayList<>();
         int linhas = jtProdutosVenda.getRowCount();
         for (int i = 0; i < linhas; i++) {
-            modelVendaProdutos = new ModelVendaProduto();
-            modelVendaProdutos.setProduto((int) jtProdutosVenda.getValueAt(i, 0));
-            modelVendaProdutos.setVenda(idVenda);
-            modelVendaProdutos.setVendaProdutoValor(FormataValorReal.retornarRealDouble(jtProdutosVenda.getValueAt(i, 3).toString()));
-            modelVendaProdutos.setVendaProdutoQuantidade(Integer.parseInt(jtProdutosVenda.getValueAt(i, 2).toString()));
-            listaModelVendaProdutos.add(modelVendaProdutos);
-        }
+            ItemPedidoModel itemPedidoModel = new ItemPedidoModel();
+            itemPedidoModel.setPedido(pedidoModel);
 
-        if (controllerVendaProdutos.salvarVendasProdutosController(listaModelVendaProdutos)) {
-            JOptionPane.showMessageDialog(this, "Produtos salvos com sucesso", "ATENÇÃO",
-                    JOptionPane.INFORMATION_MESSAGE);
-            limparTela();
-            listarVendasClientes();
-        } else {
-            JOptionPane.showMessageDialog(this, "Erro ao salvar produtos!", "ERRO",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+            Long codigoProduto = Long.parseLong(jtProdutosVenda.getValueAt(i, 0).toString());
+            ProdutoModel produtoModel = produtoController.retornarProdutoController(codigoProduto);
+            itemPedidoModel.setProduto(produtoModel);
 
+            itemPedidoModel.setQuantidade(Double.parseDouble(jtProdutosVenda.getValueAt(i, 2).toString()));
+            itemPedidoModel.setValorUnitario(FormataValorReal.retornarRealDouble(jtProdutosVenda.getValueAt(i, 3).toString()));
+            itemPedidoModel.setValorTotal(FormataValorReal.retornarRealDouble(jtProdutosVenda.getValueAt(i, 4).toString()));
+
+            listaItensPedido.add(itemPedidoModel);
+        }
+        return listaItensPedido;
     }
-    
-    /**
-     * Método que adiciona e checa se há o mesmo produto na pré-venda.
-     */
+
     private void adicionarProduto() {
         if (jtfQuantidade.getText().isBlank() || Integer.parseInt(jtfQuantidade.getText()) <= 0) {
             JOptionPane.showMessageDialog(this, "Quantidade informada inválida", "ATENÇÃO",
@@ -723,7 +665,7 @@ public class PedidoView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Produto não informado", "ATENÇÃO",
                     JOptionPane.WARNING_MESSAGE);
         } else {
-            modelProdutos = controllerProduto.retornarProdutoController(Integer.parseInt(jtfCodigoProduto.getText()));
+            produtoModel = produtoController.retornarProdutoController(Long.parseLong(jtfCodigoProduto.getText()));
             // Inicia a linha na tabela
             DefaultTableModel modeloCadastro = (DefaultTableModel) jtProdutosVenda.getModel();
             int quantidade = Integer.parseInt(jtfQuantidade.getText());
@@ -736,13 +678,13 @@ public class PedidoView extends javax.swing.JFrame {
             // Verifica se há um produto já está na tabela
             boolean produtoEncontrado = false;
             for (int i = 0; i < modeloCadastro.getRowCount(); i++) {
-                int idProdutoTabela = (int) modeloCadastro.getValueAt(i, 0);
+                Long idProdutoTabela = Long.parseLong(modeloCadastro.getValueAt(i, 0).toString());
                 int quantidadeAtual = Integer.parseInt(modeloCadastro.getValueAt(i, 2).toString());
-                if (idProdutoTabela == modelProdutos.getIdProduto()) {
-                    int quantidadeNova = quantidadeAtual + (int) quantidade;
+                if (idProdutoTabela.equals(produtoModel.getCodigoProduto())) {
+                    int quantidadeNova = quantidadeAtual + quantidade;
                     modeloCadastro.setValueAt(quantidadeNova, i, 2);
-                    modeloCadastro.setValueAt(valorReal.format(modelProdutos.getProdutoPreco()), i, 3);
-                    modeloCadastro.setValueAt(valorReal.format(quantidadeNova * modelProdutos.getProdutoPreco()), i, 4);
+                    modeloCadastro.setValueAt(valorReal.format(produtoModel.getValorProduto()), i, 3);
+                    modeloCadastro.setValueAt(valorReal.format(quantidadeNova * produtoModel.getValorProduto()), i, 4);
                     produtoEncontrado = true;
                     break;
                 }
@@ -750,11 +692,11 @@ public class PedidoView extends javax.swing.JFrame {
 
             if (!produtoEncontrado) {
                 modeloCadastro.addRow(new Object[]{
-                    modelProdutos.getIdProduto(),
-                    modelProdutos.getProdutoNome(),
+                    produtoModel.getCodigoProduto(),
+                    produtoModel.getDescricaoProduto(),
                     jtfQuantidade.getText(),
-                    valorReal.format(modelProdutos.getProdutoPreco()),
-                    valorReal.format(quantidade * modelProdutos.getProdutoPreco())
+                    valorReal.format(produtoModel.getValorProduto()),
+                    valorReal.format(quantidade * produtoModel.getValorProduto())
                 });
             }
 
@@ -762,10 +704,7 @@ public class PedidoView extends javax.swing.JFrame {
             somaValorTotalProdutos();
         }
     }
-    
-    /**
-     * Método que permite a edição direta de quantidade de um produto na tabela.
-     */
+
     private void editarQuantidadeProdutoTabela() {
         int linha = jtProdutosVenda.getSelectedRow();
         DefaultTableModel modeloCadastro = (DefaultTableModel) jtProdutosVenda.getModel();
@@ -776,8 +715,8 @@ public class PedidoView extends javax.swing.JFrame {
             if (Enter == 0) {
                 if (quantidade > 0) {
                     modeloCadastro.setValueAt(quantidade, linha, 2);
-                    modeloCadastro.setValueAt(valorReal.format(modelProdutos.getProdutoPreco()), linha, 3);
-                    modeloCadastro.setValueAt(valorReal.format(quantidade * modelProdutos.getProdutoPreco()), linha, 4);
+                    modeloCadastro.setValueAt(valorReal.format(produtoModel.getValorProduto()), linha, 3);
+                    modeloCadastro.setValueAt(valorReal.format(quantidade * produtoModel.getValorProduto()), linha, 4);
                     somaValorTotalProdutos();
                 } else if (quantidade == 0 || quantidade < 0) {
                     modeloCadastro.removeRow(linha);
@@ -787,13 +726,11 @@ public class PedidoView extends javax.swing.JFrame {
                 Enter = 0;
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
-    
-    /**
-     * Método para excluir uma pré-venda.
-     */
+
+    /*
     private void excluirVenda() {
         int linha = jtVendas.getSelectedRow();
         int codigo = (int) jtVendas.getValueAt(linha, 0);
@@ -809,7 +746,7 @@ public class PedidoView extends javax.swing.JFrame {
             }
         }
     }
-
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;

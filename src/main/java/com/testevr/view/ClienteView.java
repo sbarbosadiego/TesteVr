@@ -18,7 +18,7 @@ public class ClienteView extends javax.swing.JFrame {
     int mesAtual = agora.getMonthValue();
     Locale localeBR = new Locale("pt", "BR");
     NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
-    
+
     // Aluno
     ClienteModel clienteModel = new ClienteModel();
     ClienteController clienteController = new ClienteController();
@@ -265,7 +265,9 @@ public class ClienteView extends javax.swing.JFrame {
         } else {
             clienteModel.setNomeCliente(jtfNomeCliente.getText().toUpperCase());
             clienteModel.setLimiteCompra(FormataValorReal.retornarRealDouble(jtfLimiteCliente.getText()));
-            clienteModel.setDiaFechamentoFatura(agora.withDayOfMonth((int) jcbDiaFechamento.getSelectedItem()));
+            String diaFechamentoStr = (String) jcbDiaFechamento.getSelectedItem();
+            int diaFechamento = Integer.parseInt(diaFechamentoStr);
+            clienteModel.setDiaFechamentoFatura(agora.withDayOfMonth(diaFechamento));
             if (clienteController.salvarClienteController(clienteModel) > 0) {
                 JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso", "ATENÇÃO",
                         JOptionPane.INFORMATION_MESSAGE);
