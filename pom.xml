@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <exec.mainClass>com.testvr.view.MainView</exec.mainClass>
+        <exec.mainClass>com.testevr.view.MainView</exec.mainClass>
     </properties>
     <build>
         <plugins>
@@ -20,7 +20,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.testvr.view.MainView</mainClass>
+                            <mainClass>com.testevr.view.MainView</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -71,6 +71,13 @@
             <scope>provided</scope>
         </dependency>
         
+        <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.1.Final</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf -->
         <dependency>
             <groupId>com.formdev</groupId>
@@ -84,6 +91,14 @@
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf-extras</artifactId>
             <version>3.2.5</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

@@ -1,4 +1,4 @@
-package com.testvr.view;
+package com.testevr.view;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.NumberFormat;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -30,11 +30,11 @@ import javax.swing.table.DefaultTableModel;
 public class MainView extends javax.swing.JFrame {
 
     // Data Atual e Localidade
-    LocalDateTime agora = LocalDateTime.now();
+    LocalDate agora = LocalDate.now();
     Locale localeBR = new Locale("pt", "BR");
     NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
     
-    // Aluno
+    // Cliente
     ClienteModel clienteModel = new ClienteModel();
     ClienteController clienteController = new ClienteController();
     ArrayList<ClienteModel> listaClienteModel = new ArrayList<>();
@@ -348,11 +348,11 @@ public class MainView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Matrícula", "Cód. Aluno", "Aluno", "Curso", "Data Cadastro"
+                "Código", "Cliente", "Valor Total", "Data"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -412,7 +412,7 @@ public class MainView extends javax.swing.JFrame {
         });
 
         jcbFiltroMatricula.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jcbFiltroMatricula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aluno", "Curso", "Matrícula" }));
+        jcbFiltroMatricula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Data", "Produto" }));
         jcbFiltroMatricula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbFiltroMatriculaActionPerformed(evt);
@@ -708,7 +708,7 @@ public class MainView extends javax.swing.JFrame {
         int linha = jtbCliente.getSelectedRow();
         try {
             Long codigoAluno = (Long) jtbCliente.getValueAt(linha, 0);
-            clienteModel = clienteController.retornarAlunoController(codigoAluno);
+            clienteModel = clienteController.retornarClienteController(codigoAluno);
             ClienteView alunoView = new ClienteView(this);
             alunoView.addWindowListener(new WindowAdapter() {
                 @Override
@@ -728,7 +728,7 @@ public class MainView extends javax.swing.JFrame {
         int linha = jtbProduto.getSelectedRow();
         try {
             Long codigoProduto = (Long) jtbProduto.getValueAt(linha, 0);
-            produtoModel = produtoController.retornarAlunoController(codigoProduto);
+            produtoModel = produtoController.retornarProdutoController(codigoProduto);
             ProdutoView cursoView = new ProdutoView(this);
             cursoView.addWindowListener(new WindowAdapter() {
                 @Override

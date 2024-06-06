@@ -2,12 +2,13 @@ package com.testevr.model;
 
 import com.testevr.exception.ClienteException;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.time.LocalDate;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +17,8 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@Entity(name = "clientes")
+@Entity
+@Table(name = "clientes")
 public class ClienteModel implements Serializable {
 
     @Id
@@ -31,7 +33,7 @@ public class ClienteModel implements Serializable {
     private Double limiteCompra;
 
     @Column(name = "dia_fechamento_fatura", nullable = false)
-    private LocalDateTime diaFechamentoFatura;
+    private LocalDate diaFechamentoFatura;
 
     public void setNomeCliente(String nome) {
         if (nome.length() >= 100) {
@@ -40,6 +42,21 @@ public class ClienteModel implements Serializable {
             throw new ClienteException("O nome do cliente nao foi informado!");
         }
         this.nomeCliente = nome;
+    }
+
+    public void setLimiteCompra(Double limiteCompra) {
+        if (limiteCompra < 0) {
+            throw new IllegalArgumentException("O limite de compra não pode ser negativo!");
+        }
+        this.limiteCompra = limiteCompra;
+    }
+
+    public void setDiaFechamentoFatura(LocalDate diaFechamentoFatura) {
+        int dia = diaFechamentoFatura.getDayOfMonth();
+        if (dia < 1 || dia > diaFechamentoFatura.lengthOfMonth()) {
+            throw new IllegalArgumentException("Informe um valor correto para o dia de fechamento");
+        }
+        this.diaFechamentoFatura = diaFechamentoFatura;
     }
 
 }

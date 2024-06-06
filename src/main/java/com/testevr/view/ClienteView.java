@@ -1,10 +1,10 @@
-package com.testvr.view;
+package com.testevr.view;
 
 import com.testevr.controller.ClienteController;
 import com.testevr.model.ClienteModel;
 import com.testevr.util.FormataValorReal;
 import java.text.NumberFormat;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 
@@ -14,7 +14,8 @@ import javax.swing.JOptionPane;
 public class ClienteView extends javax.swing.JFrame {
 
     // Data
-    LocalDateTime agora = LocalDateTime.now();
+    LocalDate agora = LocalDate.now();
+    int mesAtual = agora.getMonthValue();
     Locale localeBR = new Locale("pt", "BR");
     NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
     
@@ -54,6 +55,8 @@ public class ClienteView extends javax.swing.JFrame {
         jtfIdCliente = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jcbDiaFechamento = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
         jtfLimiteCliente = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -100,7 +103,18 @@ public class ClienteView extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("Limite de Compra:");
 
+        jcbDiaFechamento.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jcbDiaFechamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel4.setText("Dia de Fechamento:");
+
         jtfLimiteCliente.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jtfLimiteCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfLimiteClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -125,8 +139,14 @@ public class ClienteView extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addGap(254, 254, 254))
                             .addComponent(jtfNomeCliente)))
-                    .addComponent(jLabel1)
-                    .addComponent(jtfLimiteCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jtfLimiteCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jcbDiaFechamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -141,9 +161,15 @@ public class ClienteView extends javax.swing.JFrame {
                     .addComponent(jtfIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfLimiteCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jcbDiaFechamento, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jtfLimiteCliente)
+                        .addGap(2, 2, 2)))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -188,6 +214,10 @@ public class ClienteView extends javax.swing.JFrame {
     private void jtfIdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfIdClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfIdClienteActionPerformed
+
+    private void jtfLimiteClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfLimiteClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfLimiteClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -235,6 +265,7 @@ public class ClienteView extends javax.swing.JFrame {
         } else {
             clienteModel.setNomeCliente(jtfNomeCliente.getText().toUpperCase());
             clienteModel.setLimiteCompra(FormataValorReal.retornarRealDouble(jtfLimiteCliente.getText()));
+            clienteModel.setDiaFechamentoFatura(agora.withDayOfMonth((int) jcbDiaFechamento.getSelectedItem()));
             if (clienteController.salvarClienteController(clienteModel) > 0) {
                 JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso", "ATENÇÃO",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -256,6 +287,7 @@ public class ClienteView extends javax.swing.JFrame {
         } else {
             clienteModel.setNomeCliente(jtfNomeCliente.getText().toUpperCase());
             clienteModel.setLimiteCompra(FormataValorReal.retornarRealDouble(jtfLimiteCliente.getText()));
+            clienteModel.setDiaFechamentoFatura(agora.withMonth(mesAtual).withDayOfMonth(Integer.parseInt((String) jcbDiaFechamento.getSelectedItem())));
             if (clienteController.atualizarClienteController(clienteModel)) {
                 JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso", "ATENÇÃO",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -283,7 +315,9 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox<String> jcbDiaFechamento;
     private javax.swing.JTextField jtfIdCliente;
     private javax.swing.JTextField jtfLimiteCliente;
     private javax.swing.JTextField jtfNomeCliente;

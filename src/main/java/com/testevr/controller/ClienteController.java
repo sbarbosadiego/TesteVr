@@ -25,7 +25,7 @@ public class ClienteController {
         return this.clienteDao.excluir(id);
     }
     
-    public ClienteModel retornarAlunoController(Long id) {
+    public ClienteModel retornarClienteController(Long id) {
         return this.clienteDao.retornar(id);
     }
     

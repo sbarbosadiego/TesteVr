@@ -25,7 +25,7 @@ public class ProdutoController {
         return this.produtoDao.excluir(id);
     }
     
-    public ProdutoModel retornarAlunoController(Long id) {
+    public ProdutoModel retornarProdutoController(Long id) {
         return this.produtoDao.retornar(id);
     }
     

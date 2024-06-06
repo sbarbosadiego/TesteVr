@@ -4,6 +4,8 @@
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <class>com.testevr.model.ClienteModel</class>
     <class>com.testevr.model.ProdutoModel</class>
+    <class>com.testevr.model.ItemPedidoModel</class>
+    <class>com.testevr.model.PedidoModel</class>
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>

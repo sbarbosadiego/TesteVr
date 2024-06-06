@@ -24,7 +24,7 @@ public class FormataValorReal {
             Number number = valorReal.parse(valorString);
             valor = number.doubleValue();
         } catch (ParseException e) {
-            
+            e.printStackTrace();
         }
         return valorReal.format(valor);
     }
@@ -51,7 +51,7 @@ public class FormataValorReal {
             Number number = valorReal.parse(valorString);
             valor = number.doubleValue();
         } catch (ParseException e) {
-            
+            e.printStackTrace();
         }
         return valor;
     }
