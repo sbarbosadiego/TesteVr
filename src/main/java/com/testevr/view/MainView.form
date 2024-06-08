@@ -172,7 +172,7 @@
                       <Table columnCount="4" rowCount="0">
                         <Column editable="false" title="C&#xf3;digo" type="java.lang.Object"/>
                         <Column editable="false" title="Cliente" type="java.lang.Object"/>
-                        <Column editable="false" title="Data de Faturamento" type="java.lang.Object"/>
+                        <Column editable="false" title="Dia de Fechamento" type="java.lang.Object"/>
                         <Column editable="false" title="Limite de Compra" type="java.lang.Object"/>
                       </Table>
                     </Property>
@@ -286,7 +286,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="telaProdutos">
+        <Container class="javax.swing.JPanel" name="telaProduto">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Produto">
@@ -472,7 +472,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="telaPedidos">
+        <Container class="javax.swing.JPanel" name="telaPedido">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Pedidos">
@@ -491,20 +491,22 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jtfPesquisarMatricula" max="32767" attributes="0"/>
+                              <Component id="jtfPesquisarPedido" max="32767" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jcbFiltroMatricula" min="-2" max="-2" attributes="0"/>
+                              <Component id="jcbFiltroPedido" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="btnPesquisarMatricula" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="btnPesquisarPedido" min="-2" pref="50" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnAtualizarTabelaPedidos" min="-2" pref="50" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnNovoMatricula" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="btnNovoPedido" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnEditarMatricula" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="btnEditarPedido" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnExcluirMatricula" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="btnExcluirPedido" min="-2" pref="100" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btnVisualizar" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -518,18 +520,19 @@
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jtfPesquisarMatricula" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jtfPesquisarPedido" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btnAtualizarTabelaPedidos" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                          <Component id="btnPesquisarMatricula" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                          <Component id="jcbFiltroMatricula" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                          <Component id="btnPesquisarPedido" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="jcbFiltroPedido" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane5" min="-2" pref="500" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnEditarMatricula" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btnNovoMatricula" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btnExcluirMatricula" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btnEditarPedido" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btnNovoPedido" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btnExcluirPedido" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btnVisualizar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -594,7 +597,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="btnEditarMatricula">
+            <Component class="javax.swing.JButton" name="btnEditarPedido">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="16" style="0"/>
@@ -602,7 +605,7 @@
                 <Property name="text" type="java.lang.String" value="Editar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarMatriculaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarPedidoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
@@ -613,14 +616,14 @@
                 <Property name="text" type="java.lang.String" value="Pesquisar:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jtfPesquisarMatricula">
+            <Component class="javax.swing.JTextField" name="jtfPesquisarPedido">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="16" style="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfPesquisarMatriculaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfPesquisarPedidoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnAtualizarTabelaPedidos">
@@ -636,7 +639,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAtualizarTabelaPedidosActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnPesquisarMatricula">
+            <Component class="javax.swing.JButton" name="btnPesquisarPedido">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="15" style="0"/>
@@ -646,10 +649,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPesquisarMatriculaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPesquisarPedidoActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnNovoMatricula">
+            <Component class="javax.swing.JButton" name="btnNovoPedido">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="16" style="0"/>
@@ -657,10 +660,10 @@
                 <Property name="text" type="java.lang.String" value="Novo"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNovoMatriculaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNovoPedidoActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnExcluirMatricula">
+            <Component class="javax.swing.JButton" name="btnExcluirPedido">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="16" style="0"/>
@@ -668,10 +671,10 @@
                 <Property name="text" type="java.lang.String" value="Excluir"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirMatriculaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirPedidoActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jcbFiltroMatricula">
+            <Component class="javax.swing.JComboBox" name="jcbFiltroPedido">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="16" style="0"/>
@@ -685,11 +688,22 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbFiltroMatriculaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbFiltroPedidoActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnVisualizar">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="16" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Visualizar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisualizarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

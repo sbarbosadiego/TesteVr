@@ -1,14 +1,17 @@
 package com.testevr.model;
 
 import com.testevr.exception.ClienteException;
+import jakarta.persistence.CascadeType;
 import java.io.Serializable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,8 +34,11 @@ public class ClienteModel implements Serializable {
     @Column(name = "limite_compra", nullable = false)
     private Double limiteCompra;
 
-    @Column(name = "dia_fechamento_fatura", nullable = false)
-    private LocalDate diaFechamentoFatura;
+    @Column(name = "dia_fechamento", nullable = false)
+    private int diaFechamentoFatura;
+    
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PedidoModel> pedidos;
 
     public void setNomeCliente(String nome) {
         if (nome.length() >= 100) {
@@ -50,13 +56,4 @@ public class ClienteModel implements Serializable {
         this.limiteCompra = limiteCompra;
     }
     
-    public void setDiaFechamentoFatura(LocalDate diaFechamentoFatura) {
-        // Validar se o dia de fechamento está dentro do intervalo válido para o mês
-        int maxDayOfMonth = diaFechamentoFatura.lengthOfMonth();
-        if (diaFechamentoFatura.getDayOfMonth() < 1 || diaFechamentoFatura.getDayOfMonth() > maxDayOfMonth) {
-            throw new IllegalArgumentException("Dia de fechamento inválido para o mês atual.");
-        }
-        this.diaFechamentoFatura = diaFechamentoFatura;
-    }
-
 }

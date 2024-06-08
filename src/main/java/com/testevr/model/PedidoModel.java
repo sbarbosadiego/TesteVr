@@ -66,5 +66,13 @@ public class PedidoModel implements Serializable {
             adicionarItem(item);
         }
     }
+    
+    private void atualizarValorPedido() {
+        double total = 0.0;
+        for (ItemPedidoModel item : listaItens) {
+            total += item.getValorTotal();
+        }
+        this.valorPedido = total;
+    }
 
 }

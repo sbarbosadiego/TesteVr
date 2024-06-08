@@ -10,6 +10,7 @@ import com.testevr.controller.ProdutoController;
 import com.testevr.model.ClienteModel;
 import com.testevr.model.PedidoModel;
 import com.testevr.model.ProdutoModel;
+import com.testevr.util.FormatarData;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
@@ -85,7 +86,7 @@ public class MainView extends javax.swing.JFrame {
         btnPesquisarCliente = new javax.swing.JButton();
         btnNovoCliente = new javax.swing.JButton();
         btnExcluirCliente = new javax.swing.JButton();
-        telaProdutos = new javax.swing.JPanel();
+        telaProduto = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jtbProduto = new javax.swing.JTable();
         btnEditarProduto = new javax.swing.JButton();
@@ -95,17 +96,18 @@ public class MainView extends javax.swing.JFrame {
         btnPesquisarProduto = new javax.swing.JButton();
         btnNovoProduto = new javax.swing.JButton();
         btnExcluirProduto = new javax.swing.JButton();
-        telaPedidos = new javax.swing.JPanel();
+        telaPedido = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jtbPedidos = new javax.swing.JTable();
-        btnEditarMatricula = new javax.swing.JButton();
+        btnEditarPedido = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jtfPesquisarMatricula = new javax.swing.JTextField();
+        jtfPesquisarPedido = new javax.swing.JTextField();
         btnAtualizarTabelaPedidos = new javax.swing.JButton();
-        btnPesquisarMatricula = new javax.swing.JButton();
-        btnNovoMatricula = new javax.swing.JButton();
-        btnExcluirMatricula = new javax.swing.JButton();
-        jcbFiltroMatricula = new javax.swing.JComboBox<>();
+        btnPesquisarPedido = new javax.swing.JButton();
+        btnNovoPedido = new javax.swing.JButton();
+        btnExcluirPedido = new javax.swing.JButton();
+        jcbFiltroPedido = new javax.swing.JComboBox<>();
+        btnVisualizar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuModoEscuro = new javax.swing.JCheckBoxMenuItem();
@@ -125,7 +127,7 @@ public class MainView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Cliente", "Data de Faturamento", "Limite de Compra"
+                "Código", "Cliente", "Dia de Fechamento", "Limite de Compra"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -303,15 +305,15 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout telaProdutosLayout = new javax.swing.GroupLayout(telaProdutos);
-        telaProdutos.setLayout(telaProdutosLayout);
-        telaProdutosLayout.setHorizontalGroup(
-            telaProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(telaProdutosLayout.createSequentialGroup()
+        javax.swing.GroupLayout telaProdutoLayout = new javax.swing.GroupLayout(telaProduto);
+        telaProduto.setLayout(telaProdutoLayout);
+        telaProdutoLayout.setHorizontalGroup(
+            telaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telaProdutoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(telaProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(telaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE)
-                    .addGroup(telaProdutosLayout.createSequentialGroup()
+                    .addGroup(telaProdutoLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtfPesquisarProduto)
@@ -319,7 +321,7 @@ public class MainView extends javax.swing.JFrame {
                         .addComponent(btnPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAtualizarTabelaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(telaProdutosLayout.createSequentialGroup()
+                    .addGroup(telaProdutoLayout.createSequentialGroup()
                         .addComponent(btnNovoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEditarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -328,11 +330,11 @@ public class MainView extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        telaProdutosLayout.setVerticalGroup(
-            telaProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(telaProdutosLayout.createSequentialGroup()
+        telaProdutoLayout.setVerticalGroup(
+            telaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telaProdutoLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(telaProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(telaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jtfPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAtualizarTabelaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -340,14 +342,14 @@ public class MainView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(telaProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(telaProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNovoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExcluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Produto", telaProdutos);
+        jTabbedPane1.addTab("Produto", telaProduto);
 
         jtbPedidos.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jtbPedidos.setModel(new javax.swing.table.DefaultTableModel(
@@ -372,21 +374,21 @@ public class MainView extends javax.swing.JFrame {
             jtbPedidos.getColumnModel().getColumn(1).setMaxWidth(200);
         }
 
-        btnEditarMatricula.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnEditarMatricula.setText("Editar");
-        btnEditarMatricula.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarPedido.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnEditarPedido.setText("Editar");
+        btnEditarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarMatriculaActionPerformed(evt);
+                btnEditarPedidoActionPerformed(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("Pesquisar:");
 
-        jtfPesquisarMatricula.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jtfPesquisarMatricula.addActionListener(new java.awt.event.ActionListener() {
+        jtfPesquisarPedido.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jtfPesquisarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfPesquisarMatriculaActionPerformed(evt);
+                jtfPesquisarPedidoActionPerformed(evt);
             }
         });
 
@@ -398,86 +400,97 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        btnPesquisarMatricula.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        btnPesquisarMatricula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/search.png"))); // NOI18N
-        btnPesquisarMatricula.addActionListener(new java.awt.event.ActionListener() {
+        btnPesquisarPedido.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        btnPesquisarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/search.png"))); // NOI18N
+        btnPesquisarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPesquisarMatriculaActionPerformed(evt);
+                btnPesquisarPedidoActionPerformed(evt);
             }
         });
 
-        btnNovoMatricula.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnNovoMatricula.setText("Novo");
-        btnNovoMatricula.addActionListener(new java.awt.event.ActionListener() {
+        btnNovoPedido.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnNovoPedido.setText("Novo");
+        btnNovoPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoMatriculaActionPerformed(evt);
+                btnNovoPedidoActionPerformed(evt);
             }
         });
 
-        btnExcluirMatricula.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnExcluirMatricula.setText("Excluir");
-        btnExcluirMatricula.addActionListener(new java.awt.event.ActionListener() {
+        btnExcluirPedido.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnExcluirPedido.setText("Excluir");
+        btnExcluirPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirMatriculaActionPerformed(evt);
+                btnExcluirPedidoActionPerformed(evt);
             }
         });
 
-        jcbFiltroMatricula.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jcbFiltroMatricula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Data", "Produto" }));
-        jcbFiltroMatricula.addActionListener(new java.awt.event.ActionListener() {
+        jcbFiltroPedido.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jcbFiltroPedido.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Data", "Produto" }));
+        jcbFiltroPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbFiltroMatriculaActionPerformed(evt);
+                jcbFiltroPedidoActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout telaPedidosLayout = new javax.swing.GroupLayout(telaPedidos);
-        telaPedidos.setLayout(telaPedidosLayout);
-        telaPedidosLayout.setHorizontalGroup(
-            telaPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(telaPedidosLayout.createSequentialGroup()
+        btnVisualizar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnVisualizar.setText("Visualizar");
+        btnVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout telaPedidoLayout = new javax.swing.GroupLayout(telaPedido);
+        telaPedido.setLayout(telaPedidoLayout);
+        telaPedidoLayout.setHorizontalGroup(
+            telaPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telaPedidoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(telaPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(telaPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE)
-                    .addGroup(telaPedidosLayout.createSequentialGroup()
+                    .addGroup(telaPedidoLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfPesquisarMatricula)
+                        .addComponent(jtfPesquisarPedido)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jcbFiltroMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcbFiltroPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPesquisarMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPesquisarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAtualizarTabelaPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(telaPedidosLayout.createSequentialGroup()
-                        .addComponent(btnNovoMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(telaPedidoLayout.createSequentialGroup()
+                        .addComponent(btnNovoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEditarMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnExcluirMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcluirPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnVisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        telaPedidosLayout.setVerticalGroup(
-            telaPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(telaPedidosLayout.createSequentialGroup()
+        telaPedidoLayout.setVerticalGroup(
+            telaPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telaPedidoLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(telaPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(telaPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jtfPesquisarMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfPesquisarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAtualizarTabelaPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesquisarMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcbFiltroMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnPesquisarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbFiltroPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(telaPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditarMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNovoMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluirMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(telaPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExcluirPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Pedidos", telaPedidos);
+        jTabbedPane1.addTab("Pedidos", telaPedido);
 
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -582,21 +595,21 @@ public class MainView extends javax.swing.JFrame {
         excluirProduto();
     }//GEN-LAST:event_btnExcluirProdutoActionPerformed
 
-    private void btnEditarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarMatriculaActionPerformed
+    private void btnEditarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPedidoActionPerformed
         editarSalvar = "editar";
         //editarMatricula();
-    }//GEN-LAST:event_btnEditarMatriculaActionPerformed
+    }//GEN-LAST:event_btnEditarPedidoActionPerformed
 
-    private void jtfPesquisarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfPesquisarMatriculaActionPerformed
+    private void jtfPesquisarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfPesquisarPedidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtfPesquisarMatriculaActionPerformed
+    }//GEN-LAST:event_jtfPesquisarPedidoActionPerformed
 
     private void btnAtualizarTabelaPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarTabelaPedidosActionPerformed
         listarPedidos();
-        jtfPesquisarMatricula.setText("");
+        jtfPesquisarPedido.setText("");
     }//GEN-LAST:event_btnAtualizarTabelaPedidosActionPerformed
 
-    private void btnPesquisarMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarMatriculaActionPerformed
+    private void btnPesquisarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarPedidoActionPerformed
         /*
         if (jcbFiltroMatricula.getEditor().getItem().equals("Aluno")) {
             listarMatriculaNomeAluno(jtfPesquisarMatricula.getText());
@@ -606,19 +619,19 @@ public class MainView extends javax.swing.JFrame {
             listarMatriculaId(Long.valueOf(jtfPesquisarMatricula.getText()));
         }
          */
-    }//GEN-LAST:event_btnPesquisarMatriculaActionPerformed
+    }//GEN-LAST:event_btnPesquisarPedidoActionPerformed
 
-    private void btnNovoMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoMatriculaActionPerformed
+    private void btnNovoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoPedidoActionPerformed
         salvarNovoPedido();
-    }//GEN-LAST:event_btnNovoMatriculaActionPerformed
+    }//GEN-LAST:event_btnNovoPedidoActionPerformed
 
-    private void btnExcluirMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirMatriculaActionPerformed
+    private void btnExcluirPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirPedidoActionPerformed
         excluirPedido();
-    }//GEN-LAST:event_btnExcluirMatriculaActionPerformed
+    }//GEN-LAST:event_btnExcluirPedidoActionPerformed
 
-    private void jcbFiltroMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbFiltroMatriculaActionPerformed
+    private void jcbFiltroPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbFiltroPedidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcbFiltroMatriculaActionPerformed
+    }//GEN-LAST:event_jcbFiltroPedidoActionPerformed
 
     private void menuModoEscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuModoEscuroActionPerformed
         if (menuModoEscuro.isSelected()) {
@@ -655,6 +668,10 @@ public class MainView extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_menuLinkedInActionPerformed
+
+    private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
+        visualizarPedido();
+    }//GEN-LAST:event_btnVisualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -715,8 +732,8 @@ public class MainView extends javax.swing.JFrame {
     private void editarCliente() {
         int linha = jtbCliente.getSelectedRow();
         try {
-            Long codigoAluno = (Long) jtbCliente.getValueAt(linha, 0);
-            clienteModel = clienteController.retornarClienteController(codigoAluno);
+            Long codigoCliente = (Long) jtbCliente.getValueAt(linha, 0);
+            clienteModel = clienteController.retornarClienteController(codigoCliente);
             ClienteView clienteView = new ClienteView(this);
             clienteView.addWindowListener(new WindowAdapter() {
                 @Override
@@ -773,6 +790,28 @@ public class MainView extends javax.swing.JFrame {
         }
     }
      */
+    
+    private void visualizarPedido() {
+        int linha = jtbPedidos.getSelectedRow();
+        try {
+            Long codigoPedido = (Long) jtbPedidos.getValueAt(linha, 0);
+            pedidoModel = pedidoController.retornarPedidoController(codigoPedido);
+            PedidoInfoView pedidoInfoView = new PedidoInfoView(this);
+            pedidoInfoView.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    setEnabled(true);
+                }
+            });
+            pedidoInfoView.setPedidoModel(pedidoModel);
+            this.setEnabled(false);
+            pedidoInfoView.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //JOptionPane.showMessageDialog(this, "Nenhum registro selecionado");
+        }
+    }
+    
     private void excluirCliente() {
         int linha = jtbCliente.getSelectedRow();
         Long codigoAluno = (Long) jtbCliente.getValueAt(linha, 0);
@@ -832,7 +871,7 @@ public class MainView extends javax.swing.JFrame {
             tabela.addRow(new Object[]{
                 listaClienteModel.get(c).getCodigoCliente(),
                 listaClienteModel.get(c).getNomeCliente(),
-                listaClienteModel.get(c).getDiaFechamentoFatura().format(DateTimeFormatter.ISO_LOCAL_DATE),
+                listaClienteModel.get(c).getDiaFechamentoFatura(),
                 valorReal.format(listaClienteModel.get(c).getLimiteCompra())
             });
         }
@@ -871,7 +910,7 @@ public class MainView extends javax.swing.JFrame {
                 codigoCliente,
                 nomeCliente,
                 valorReal.format(listaPedidos.get(c).getValorPedido()),
-                listaPedidos.get(c).getDataPedido().format(DateTimeFormatter.ISO_LOCAL_DATE)
+                FormatarData.formatarDataTabela(listaPedidos.get(c).getDataPedido().toString())
             });
         }
     }
@@ -887,7 +926,7 @@ public class MainView extends javax.swing.JFrame {
             tabela.addRow(new Object[]{
                 listaClienteModel.get(c).getCodigoCliente(),
                 listaClienteModel.get(c).getNomeCliente(),
-                listaClienteModel.get(c).getDiaFechamentoFatura().format(DateTimeFormatter.ISO_LOCAL_DATE),
+                listaClienteModel.get(c).getDiaFechamentoFatura(),
                 valorReal.format(listaClienteModel.get(c).getLimiteCompra())
             });
         }
@@ -967,17 +1006,18 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton btnAtualizarTabelaPedidos;
     private javax.swing.JButton btnAtualizarTabelaProduto;
     private javax.swing.JButton btnEditarCliente;
-    private javax.swing.JButton btnEditarMatricula;
+    private javax.swing.JButton btnEditarPedido;
     private javax.swing.JButton btnEditarProduto;
     private javax.swing.JButton btnExcluirCliente;
-    private javax.swing.JButton btnExcluirMatricula;
+    private javax.swing.JButton btnExcluirPedido;
     private javax.swing.JButton btnExcluirProduto;
     private javax.swing.JButton btnNovoCliente;
-    private javax.swing.JButton btnNovoMatricula;
+    private javax.swing.JButton btnNovoPedido;
     private javax.swing.JButton btnNovoProduto;
     private javax.swing.JButton btnPesquisarCliente;
-    private javax.swing.JButton btnPesquisarMatricula;
+    private javax.swing.JButton btnPesquisarPedido;
     private javax.swing.JButton btnPesquisarProduto;
+    private javax.swing.JButton btnVisualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -988,18 +1028,18 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JComboBox<String> jcbFiltroMatricula;
+    private javax.swing.JComboBox<String> jcbFiltroPedido;
     private javax.swing.JTable jtbCliente;
     private javax.swing.JTable jtbPedidos;
     private javax.swing.JTable jtbProduto;
     private javax.swing.JTextField jtfPesquisarCliente;
-    private javax.swing.JTextField jtfPesquisarMatricula;
+    private javax.swing.JTextField jtfPesquisarPedido;
     private javax.swing.JTextField jtfPesquisarProduto;
     private javax.swing.JMenuItem menuGitHub;
     private javax.swing.JMenuItem menuLinkedIn;
     private javax.swing.JCheckBoxMenuItem menuModoEscuro;
     private javax.swing.JPanel telaCliente;
-    private javax.swing.JPanel telaPedidos;
-    private javax.swing.JPanel telaProdutos;
+    private javax.swing.JPanel telaPedido;
+    private javax.swing.JPanel telaProduto;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,7 +2,7 @@ package com.testevr.view;
 
 import com.testevr.controller.ProdutoController;
 import com.testevr.model.ProdutoModel;
-import com.testevr.util.FormataValorReal;
+import com.testevr.util.FormatarValor;
 import java.text.NumberFormat;
 import java.util.Locale;
 import javax.swing.JOptionPane;
@@ -52,10 +52,10 @@ public class ProdutoView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnCancelarProduto = new javax.swing.JButton();
-        jtfValorProduto = new javax.swing.JTextField();
+        jtfValorProduto = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Curso");
+        setTitle("Cadastro de Produto");
         setResizable(false);
 
         btnSalvarProduto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -98,6 +98,7 @@ public class ProdutoView extends javax.swing.JFrame {
             }
         });
 
+        jtfValorProduto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         jtfValorProduto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -117,14 +118,16 @@ public class ProdutoView extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jtfValorProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jtfValorProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(195, 195, 195)
                         .addComponent(btnSalvarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancelarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,15 +139,14 @@ public class ProdutoView extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jtfNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jtfValorProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jtfIdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfIdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfValorProduto, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -230,7 +232,7 @@ public class ProdutoView extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
         } else {
             produtoModel.setDescricaoProduto(jtfNomeProduto.getText().toUpperCase());
-            produtoModel.setValorProduto(FormataValorReal.retornarRealDouble(jtfValorProduto.getText()));
+            produtoModel.setValorProduto(FormatarValor.formatarStringDouble(jtfValorProduto.getText()));
             if (produtoController.salvarProdutoController(produtoModel) > 0) {
                 JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso", "ATENÇÃO",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -251,7 +253,7 @@ public class ProdutoView extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
         } else {
             produtoModel.setDescricaoProduto(jtfNomeProduto.getText().toUpperCase());
-            produtoModel.setValorProduto(FormataValorReal.retornarRealDouble(jtfValorProduto.getText()));
+            produtoModel.setValorProduto(FormatarValor.formatarStringDouble(jtfValorProduto.getText()));
             if (produtoController.atualizarProdutoController(produtoModel)) {
                 JOptionPane.showMessageDialog(null, "Produto atualizado com sucesso", "ATENÇÃO",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -269,7 +271,7 @@ public class ProdutoView extends javax.swing.JFrame {
         this.produtoModel = produto;
         jtfIdProduto.setText(this.produtoModel.getCodigoProduto().toString());
         jtfNomeProduto.setText(this.produtoModel.getDescricaoProduto());
-        jtfValorProduto.setText(FormataValorReal.formatarDoubleReal(produtoModel.getValorProduto()));
+        jtfValorProduto.setText(produtoModel.getValorProduto().toString());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -281,6 +283,6 @@ public class ProdutoView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jtfIdProduto;
     private javax.swing.JTextField jtfNomeProduto;
-    private javax.swing.JTextField jtfValorProduto;
+    private javax.swing.JFormattedTextField jtfValorProduto;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,7 +12,8 @@ import com.testevr.model.ClienteModel;
 import com.testevr.model.ItemPedidoModel;
 import com.testevr.model.PedidoModel;
 import com.testevr.model.ProdutoModel;
-import com.testevr.util.FormataValorReal;
+import com.testevr.services.ValidadorCredito;
+import com.testevr.util.FormatarValor;
 import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -32,7 +33,6 @@ public class PedidoView extends javax.swing.JFrame {
     // Idioma - Data
     Locale localeBR = new Locale("pt", "BR");
     LocalDateTime dataAtual = LocalDateTime.now();
-    //FormataDatas datas = new FormataDatas();
 
     // Cliente
     ClienteModel clienteModel = new ClienteModel();
@@ -52,6 +52,9 @@ public class PedidoView extends javax.swing.JFrame {
     ItemPedidoModel itemPedidoModel = new ItemPedidoModel();
     ItemPedidoController itemPedidoController = new ItemPedidoController();
     ArrayList<ItemPedidoModel> listaItensPedido = new ArrayList<>();
+    
+    // Validador
+    ValidadorCredito validador = new ValidadorCredito();
 
     // Tela
     private MainView mainView;
@@ -72,7 +75,6 @@ public class PedidoView extends javax.swing.JFrame {
         listaPesquisarProduto.setModel(modelo);
         listarPesquisaClientes();
         listarPesquisaProdutos();
-        habilitarDesabilitarCampos(false);
     }
 
     public PedidoView() {
@@ -95,14 +97,11 @@ public class PedidoView extends javax.swing.JFrame {
         campoPesquisaCliente = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jtfCodigoVenda = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnAdicionar = new javax.swing.JButton();
         jtfQuantidade = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
-        btnNovo = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -114,7 +113,7 @@ public class PedidoView extends javax.swing.JFrame {
         jtfCodigoProduto = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Vendas");
+        setTitle("Cadastro de Pedido");
         setMinimumSize(new java.awt.Dimension(820, 600));
         setResizable(false);
 
@@ -163,22 +162,15 @@ public class PedidoView extends javax.swing.JFrame {
         jPanel1.add(campoPesquisaCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 35, 520, 30));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel1.setText("Cód. do Cliente:");
+        jLabel1.setText("Cód. Cliente:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setText("Cliente:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(182, 10, -1, -1));
 
-        jtfCodigoVenda.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jPanel1.add(jtfCodigoVenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(717, 35, 150, 30));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel3.setText("Cód. da Venda:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(719, 10, -1, -1));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel4.setText("Cód. do Produto:");
+        jLabel4.setText("Cód. Produto:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 78, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -207,15 +199,6 @@ public class PedidoView extends javax.swing.JFrame {
         jLabel6.setText("Valor Total:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(594, 557, -1, 30));
 
-        btnNovo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnNovo.setText("Novo");
-        btnNovo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnNovo, new org.netbeans.lib.awtextra.AbsoluteConstraints(767, 600, 100, 30));
-
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -223,7 +206,7 @@ public class PedidoView extends javax.swing.JFrame {
                 btnSalvarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(649, 600, 100, 30));
+        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(767, 600, 100, 30));
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -383,10 +366,6 @@ public class PedidoView extends javax.swing.JFrame {
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         adicionarProduto();
     }//GEN-LAST:event_btnAdicionarActionPerformed
-
-    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        habilitarDesabilitarCampos(true);
-    }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limparTela();
@@ -562,20 +541,8 @@ public class PedidoView extends javax.swing.JFrame {
         campoPesquisaProduto.setText("");
         jtfQuantidade.setText("");
         jtfValorTotal.setText("");
-        jtfCodigoVenda.setText("");
         DefaultTableModel tabela = (DefaultTableModel) jtProdutosVenda.getModel();
         tabela.setNumRows(0);
-    }
-
-    private void habilitarDesabilitarCampos(boolean condicao) {
-        jtfCodigoCliente.setEnabled(condicao);
-        campoPesquisaCliente.setEnabled(condicao);
-        jtfCodigoProduto.setEnabled(condicao);
-        campoPesquisaProduto.setEnabled(condicao);
-        jtfQuantidade.setEnabled(condicao);
-        jtfValorTotal.setEnabled(condicao);
-        jtfCodigoVenda.setEnabled(condicao);
-        btnAdicionar.setEnabled(condicao);
     }
 
     private void somaValorTotalProdutos() {
@@ -610,12 +577,13 @@ public class PedidoView extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Cliente não encontrado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+            validador.validarCredito(clienteModel, FormatarValor.formatarStringDouble(jtfValorTotal.getText()));
 
             // Criar e preencher o PedidoModel
             PedidoModel pedidoModel = new PedidoModel();
             pedidoModel.setCliente(clienteModel);
             pedidoModel.setDataPedido(dataAtual);
-            pedidoModel.setValorPedido(FormataValorReal.retornarRealDouble(jtfValorTotal.getText()));
+            pedidoModel.setValorPedido(FormatarValor.formatarStringDouble(jtfValorTotal.getText()));
 
             // Preparar e adicionar os itens ao PedidoModel
             List<ItemPedidoModel> listaItensPedido = prepararItensPedido(pedidoModel);
@@ -649,8 +617,8 @@ public class PedidoView extends javax.swing.JFrame {
             itemPedidoModel.setProduto(produtoModel);
 
             itemPedidoModel.setQuantidade(Double.parseDouble(jtProdutosVenda.getValueAt(i, 2).toString()));
-            itemPedidoModel.setValorUnitario(FormataValorReal.retornarRealDouble(jtProdutosVenda.getValueAt(i, 3).toString()));
-            itemPedidoModel.setValorTotal(FormataValorReal.retornarRealDouble(jtProdutosVenda.getValueAt(i, 4).toString()));
+            itemPedidoModel.setValorUnitario(FormatarValor.formatarStringDouble(jtProdutosVenda.getValueAt(i, 3).toString()));
+            itemPedidoModel.setValorTotal(FormatarValor.formatarStringDouble(jtProdutosVenda.getValueAt(i, 4).toString()));
 
             listaItensPedido.add(itemPedidoModel);
         }
@@ -730,35 +698,15 @@ public class PedidoView extends javax.swing.JFrame {
         }
     }
 
-    /*
-    private void excluirVenda() {
-        int linha = jtVendas.getSelectedRow();
-        int codigo = (int) jtVendas.getValueAt(linha, 0);
-        if (JOptionPane.showConfirmDialog(this, "Excluir Venda?", "Excluir",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (controllerVendas.excluirVendaController(codigo)) {
-                JOptionPane.showMessageDialog(this, "Venda excluída", "ATENÇÃO",
-                        JOptionPane.WARNING_MESSAGE);
-                listarVendasClientes();
-            } else {
-                JOptionPane.showMessageDialog(this, "Erro de exclusão", "ERRO",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-     */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
-    private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JTextField campoPesquisaCliente;
     private javax.swing.JTextField campoPesquisaProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -768,7 +716,6 @@ public class PedidoView extends javax.swing.JFrame {
     private javax.swing.JTable jtProdutosVenda;
     private javax.swing.JFormattedTextField jtfCodigoCliente;
     private javax.swing.JFormattedTextField jtfCodigoProduto;
-    private javax.swing.JTextField jtfCodigoVenda;
     private javax.swing.JFormattedTextField jtfQuantidade;
     private javax.swing.JTextField jtfValorTotal;
     private javax.swing.JList<String> listaPesquisarCliente;
