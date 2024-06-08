@@ -283,14 +283,12 @@ public class ClienteView extends javax.swing.JFrame {
             clienteModel.setLimiteCompra(FormatarValor.formatarStringDouble(jtfLimiteCliente.getText()));
             clienteModel.setDiaFechamentoFatura((Integer) jsDiaFechamento.getValue());
             if (clienteController.atualizarClienteController(clienteModel)) {
-                JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso", "ATENÇÃO",
-                        JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
                 mainView.listarClientes();
                 dispose();
                 mainView.setEnabled(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados do cliente", "ATENÇÃO",
-                        JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados do cliente", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }

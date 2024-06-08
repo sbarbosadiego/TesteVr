@@ -1,6 +1,7 @@
 package com.testevr.model;
 
 import static org.junit.Assert.assertEquals;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -8,43 +9,67 @@ import org.junit.Test;
  */
 public class ItemPedidoModelTest {
     
-    @Test
-    public void testSetQuantidadeValida() {
-        ItemPedidoModel itemPedido = new ItemPedidoModel();
-        itemPedido.setQuantidade(5.0);
-        assertEquals(5.0, itemPedido.getQuantidade(), 0.001);
-    }
+    private ItemPedidoModel itemPedido;
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testSetQuantidadeNegativa() {
-        ItemPedidoModel itemPedido = new ItemPedidoModel();
-        itemPedido.setQuantidade(-2.0);
+    @Before
+    public void setUp() {
+        itemPedido = new ItemPedidoModel();
     }
 
     @Test
-    public void testSetValorUnitarioValido() {
-        ItemPedidoModel itemPedido = new ItemPedidoModel();
-        itemPedido.setValorUnitario(10.0);
-        assertEquals(10.0, itemPedido.getValorUnitario(), 0.001);
+    public void testSetQuantidade_ValidQuantity() {
+        Double quantidade = 10.0;
+        itemPedido.setQuantidade(quantidade);
+        assertEquals(quantidade, itemPedido.getQuantidade());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSetValorUnitarioNegativo() {
-        ItemPedidoModel itemPedido = new ItemPedidoModel();
-        itemPedido.setValorUnitario(-5.0);
+    public void testSetQuantidade_NegativeQuantity() {
+        itemPedido.setQuantidade(-1.0);
     }
 
     @Test
-    public void testSetValorTotalValido() {
-        ItemPedidoModel itemPedido = new ItemPedidoModel();
-        itemPedido.setValorTotal(50.0);
-        assertEquals(50.0, itemPedido.getValorTotal(), 0.001);
+    public void testSetValorUnitario_ValidUnitValue() {
+        Double valorUnitario = 50.0;
+        itemPedido.setValorUnitario(valorUnitario);
+        assertEquals(valorUnitario, itemPedido.getValorUnitario());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSetValorTotalNegativo() {
-        ItemPedidoModel itemPedido = new ItemPedidoModel();
-        itemPedido.setValorTotal(-30.0);
+    public void testSetValorUnitario_NegativeUnitValue() {
+        itemPedido.setValorUnitario(-50.0);
+    }
+
+    @Test
+    public void testSetValorTotal_ValidTotalValue() {
+        Double valorTotal = 500.0;
+        itemPedido.setValorTotal(valorTotal);
+        assertEquals(valorTotal, itemPedido.getValorTotal());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetValorTotal_NegativeTotalValue() {
+        itemPedido.setValorTotal(-500.0);
+    }
+
+    @Test
+    public void testCodigoItemPedido() {
+        itemPedido.setCodigoItemPedido(1L);
+        assertEquals(Long.valueOf(1), itemPedido.getCodigoItemPedido());
+    }
+
+    @Test
+    public void testPedido() {
+        PedidoModel pedido = new PedidoModel();
+        itemPedido.setPedido(pedido);
+        assertEquals(pedido, itemPedido.getPedido());
+    }
+
+    @Test
+    public void testProduto() {
+        ProdutoModel produto = new ProdutoModel();
+        itemPedido.setProduto(produto);
+        assertEquals(produto, itemPedido.getProduto());
     }
     
 }

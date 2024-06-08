@@ -597,7 +597,7 @@ public class MainView extends javax.swing.JFrame {
 
     private void btnEditarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPedidoActionPerformed
         editarSalvar = "editar";
-        //editarMatricula();
+        editarPedido();
     }//GEN-LAST:event_btnEditarPedidoActionPerformed
 
     private void jtfPesquisarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfPesquisarPedidoActionPerformed
@@ -746,6 +746,7 @@ public class MainView extends javax.swing.JFrame {
             clienteView.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Nenhum registro selecionado");
+            e.printStackTrace();
         }
     }
 
@@ -766,31 +767,31 @@ public class MainView extends javax.swing.JFrame {
             produtoView.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Nenhum registro selecionado");
+            e.printStackTrace();
         }
     }
 
-    /*
-    private void editarMatricula() {
-        int linha = jtbMatricula.getSelectedRow();
+    private void editarPedido() {
+        int linha = jtbPedidos.getSelectedRow();
         try {
-            Long codigoMatricula = (Long) jtbMatricula.getValueAt(linha, 0);
-            cursoAlunoModel = cursoAlunoController.retornarCursoAlunoController(codigoMatricula);
-            MatriculaView matriculaView = new MatriculaView(this);
-            matriculaView.addWindowListener(new WindowAdapter() {
+            Long codigoPedido = (Long) jtbPedidos.getValueAt(linha, 0);
+            pedidoModel = pedidoController.retornarPedidoController(codigoPedido);
+            PedidoView pedidoView = new PedidoView(this);
+            pedidoView.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     setEnabled(true);
                 }
             });
-            matriculaView.setCursoAlunoModel(cursoAlunoModel);
+            pedidoView.setPedidoModel(pedidoModel);
             this.setEnabled(false);
-            matriculaView.setVisible(true);
+            pedidoView.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Nenhum registro selecionado");
+            e.printStackTrace();
         }
     }
-     */
-    
+
     private void visualizarPedido() {
         int linha = jtbPedidos.getSelectedRow();
         try {
@@ -807,11 +808,11 @@ public class MainView extends javax.swing.JFrame {
             this.setEnabled(false);
             pedidoInfoView.setVisible(true);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Nenhum registro selecionado");
             e.printStackTrace();
-            //JOptionPane.showMessageDialog(this, "Nenhum registro selecionado");
         }
     }
-    
+
     private void excluirCliente() {
         int linha = jtbCliente.getSelectedRow();
         Long codigoAluno = (Long) jtbCliente.getValueAt(linha, 0);

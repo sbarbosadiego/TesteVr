@@ -10,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import java.time.LocalDate;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -54,6 +53,13 @@ public class ClienteModel implements Serializable {
             throw new IllegalArgumentException("O limite de compra não pode ser negativo!");
         }
         this.limiteCompra = limiteCompra;
+    }
+    
+    public void setDiaFechamento (int diaFechamento) {
+        if (diaFechamento < 1 || diaFechamento > 31) {
+            throw new IllegalArgumentException("O dia de fechamento deve estar entre 1 e 31.");
+        }
+        this.diaFechamentoFatura = diaFechamento;
     }
     
 }

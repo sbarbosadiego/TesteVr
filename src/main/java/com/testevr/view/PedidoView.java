@@ -32,6 +32,7 @@ public class PedidoView extends javax.swing.JFrame {
 
     // Idioma - Data
     Locale localeBR = new Locale("pt", "BR");
+    NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
     LocalDateTime dataAtual = LocalDateTime.now();
 
     // Cliente
@@ -51,8 +52,8 @@ public class PedidoView extends javax.swing.JFrame {
     // Item Pedido
     ItemPedidoModel itemPedidoModel = new ItemPedidoModel();
     ItemPedidoController itemPedidoController = new ItemPedidoController();
-    ArrayList<ItemPedidoModel> listaItensPedido = new ArrayList<>();
-    
+    List<ItemPedidoModel> listaItensPedido = new ArrayList<>();
+
     // Validador
     ValidadorCredito validador = new ValidadorCredito();
 
@@ -105,12 +106,14 @@ public class PedidoView extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtProdutosVenda = new javax.swing.JTable();
+        jtProdutos = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         jtfValorTotal = new javax.swing.JTextField();
         btnExcluir = new javax.swing.JButton();
         jtfCodigoCliente = new javax.swing.JFormattedTextField();
         jtfCodigoProduto = new javax.swing.JFormattedTextField();
+        jtfCodigoPedido = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Pedido");
@@ -217,8 +220,8 @@ public class PedidoView extends javax.swing.JFrame {
         });
         jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 600, 100, 30));
 
-        jtProdutosVenda.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jtProdutosVenda.setModel(new javax.swing.table.DefaultTableModel(
+        jtProdutos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -241,26 +244,26 @@ public class PedidoView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jtProdutosVenda.addKeyListener(new java.awt.event.KeyAdapter() {
+        jtProdutos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtProdutosVendaKeyReleased(evt);
+                jtProdutosKeyReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(jtProdutosVenda);
-        if (jtProdutosVenda.getColumnModel().getColumnCount() > 0) {
-            jtProdutosVenda.getColumnModel().getColumn(0).setMinWidth(90);
-            jtProdutosVenda.getColumnModel().getColumn(0).setPreferredWidth(90);
-            jtProdutosVenda.getColumnModel().getColumn(0).setMaxWidth(90);
-            jtProdutosVenda.getColumnModel().getColumn(1).setPreferredWidth(160);
-            jtProdutosVenda.getColumnModel().getColumn(2).setMinWidth(70);
-            jtProdutosVenda.getColumnModel().getColumn(2).setPreferredWidth(70);
-            jtProdutosVenda.getColumnModel().getColumn(2).setMaxWidth(70);
-            jtProdutosVenda.getColumnModel().getColumn(3).setMinWidth(100);
-            jtProdutosVenda.getColumnModel().getColumn(3).setPreferredWidth(100);
-            jtProdutosVenda.getColumnModel().getColumn(3).setMaxWidth(100);
-            jtProdutosVenda.getColumnModel().getColumn(4).setMinWidth(100);
-            jtProdutosVenda.getColumnModel().getColumn(4).setPreferredWidth(100);
-            jtProdutosVenda.getColumnModel().getColumn(4).setMaxWidth(100);
+        jScrollPane1.setViewportView(jtProdutos);
+        if (jtProdutos.getColumnModel().getColumnCount() > 0) {
+            jtProdutos.getColumnModel().getColumn(0).setMinWidth(90);
+            jtProdutos.getColumnModel().getColumn(0).setPreferredWidth(90);
+            jtProdutos.getColumnModel().getColumn(0).setMaxWidth(90);
+            jtProdutos.getColumnModel().getColumn(1).setPreferredWidth(160);
+            jtProdutos.getColumnModel().getColumn(2).setMinWidth(70);
+            jtProdutos.getColumnModel().getColumn(2).setPreferredWidth(70);
+            jtProdutos.getColumnModel().getColumn(2).setMaxWidth(70);
+            jtProdutos.getColumnModel().getColumn(3).setMinWidth(100);
+            jtProdutos.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jtProdutos.getColumnModel().getColumn(3).setMaxWidth(100);
+            jtProdutos.getColumnModel().getColumn(4).setMinWidth(100);
+            jtProdutos.getColumnModel().getColumn(4).setPreferredWidth(100);
+            jtProdutos.getColumnModel().getColumn(4).setMaxWidth(100);
         }
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 145, 857, 400));
@@ -299,6 +302,14 @@ public class PedidoView extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jtfCodigoProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 103, 150, 30));
+
+        jtfCodigoPedido.setEditable(false);
+        jtfCodigoPedido.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jPanel1.add(jtfCodigoPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(717, 35, 150, 30));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel3.setText("Cód. da Venda:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(719, 10, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -372,8 +383,8 @@ public class PedidoView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int linha = jtProdutosVenda.getSelectedRow();
-        DefaultTableModel modeloCadastro = (DefaultTableModel) jtProdutosVenda.getModel();
+        int linha = jtProdutos.getSelectedRow();
+        DefaultTableModel modeloCadastro = (DefaultTableModel) jtProdutos.getModel();
 
         if (linha != -1) {
             modeloCadastro.removeRow(linha);
@@ -394,18 +405,36 @@ public class PedidoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfCodigoClienteKeyReleased
 
 
-    private void jtProdutosVendaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtProdutosVendaKeyReleased
+    private void jtProdutosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtProdutosKeyReleased
         editarQuantidadeProdutoTabela();
-    }//GEN-LAST:event_jtProdutosVendaKeyReleased
+    }//GEN-LAST:event_jtProdutosKeyReleased
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        DefaultTableModel tabela = (DefaultTableModel) jtProdutosVenda.getModel();
-        if (tabela.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Não há produtos no pedido!", "ATENÇÃO",
-                    JOptionPane.WARNING_MESSAGE);
-        } else {
-            salvarVenda();
+        DefaultTableModel tabela = (DefaultTableModel) jtProdutos.getModel();
+        int rowCount = tabela.getRowCount();
+        int columnCount = tabela.getColumnCount();
+
+        System.out.println("Conteúdo da tabela jtProdutos:");
+
+        for (int row = 0; row < rowCount; row++) {
+            System.out.print("Linha " + (row + 1) + ": ");
+            for (int col = 0; col < columnCount; col++) {
+                Object value = tabela.getValueAt(row, col);
+                System.out.print(value + " ");
+            }
+            System.out.println();
         }
+
+        if (mainView.editarSalvar.equals("salvar")) {
+            salvarPedido();
+            dispose();
+            mainView.setEnabled(true);
+        } else if (mainView.editarSalvar.equals("editar")) {
+            editarPedido();
+            dispose();
+            mainView.setEnabled(true);
+        }
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void jtfCodigoProdutoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfCodigoProdutoKeyReleased
@@ -541,17 +570,17 @@ public class PedidoView extends javax.swing.JFrame {
         campoPesquisaProduto.setText("");
         jtfQuantidade.setText("");
         jtfValorTotal.setText("");
-        DefaultTableModel tabela = (DefaultTableModel) jtProdutosVenda.getModel();
+        DefaultTableModel tabela = (DefaultTableModel) jtProdutos.getModel();
         tabela.setNumRows(0);
     }
 
     private void somaValorTotalProdutos() {
         double somaTotal = 0, valor;
-        int contador = jtProdutosVenda.getRowCount();
+        int contador = jtProdutos.getRowCount();
         NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
 
         for (int i = 0; i < contador; i++) {
-            String valorString = jtProdutosVenda.getValueAt(i, 4).toString();
+            String valorString = jtProdutos.getValueAt(i, 4).toString();
             try {
                 Number number = valorReal.parse(valorString);
                 valor = number.doubleValue();
@@ -564,7 +593,7 @@ public class PedidoView extends javax.swing.JFrame {
         jtfValorTotal.setText(valorReal.format(somaTotal));
     }
 
-    private void salvarVenda() {
+    private void salvarPedido() {
         try {
             if (jtfCodigoCliente.getText().isBlank()) {
                 JOptionPane.showMessageDialog(null, "Cliente não informado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
@@ -605,20 +634,74 @@ public class PedidoView extends javax.swing.JFrame {
         }
     }
 
+    private void editarPedido() {
+        try {
+            if (jtfCodigoPedido.getText().isBlank()) {
+                JOptionPane.showMessageDialog(null, "Código do pedido não informado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            // Recupera o pedido
+            Long codigoPedido = Long.parseLong(jtfCodigoPedido.getText());
+            PedidoModel pedidoExistente = pedidoController.retornarPedidoController(codigoPedido);
+            if (pedidoExistente == null) {
+                JOptionPane.showMessageDialog(null, "Pedido não encontrado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (jtfCodigoCliente.getText().isBlank()) {
+                JOptionPane.showMessageDialog(null, "Cliente não informado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Recupera o cliente
+            Long codigoCliente = Long.parseLong(jtfCodigoCliente.getText());
+            ClienteModel clienteModel = clienteController.retornarClienteController(codigoCliente);
+            if (clienteModel == null) {
+                JOptionPane.showMessageDialog(null, "Cliente não encontrado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            //validador.validarCredito(clienteModel, FormatarValor.formatarStringDouble(jtfValorTotal.getText()));
+
+            // Atualizar os dados do pedido existente
+            pedidoExistente.setCliente(clienteModel);
+            pedidoExistente.setDataPedido(dataAtual);
+            pedidoExistente.setValorPedido(FormatarValor.formatarStringDouble(jtfValorTotal.getText()));
+
+            // Preparar e adicionar os itens ao PedidoModel
+            //List<ItemPedidoModel> listaItensPedido = prepararItensPedido(pedidoExistente);
+            pedidoExistente.setListaItens(listaItensPedido);
+
+            // Atualizar o pedido com os itens
+            if (pedidoController.atualizarPedidoController(pedidoExistente)) {
+                JOptionPane.showMessageDialog(this, "Pedido atualizado com sucesso", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
+                limparTela();
+                mainView.listarPedidos();
+            } else {
+                JOptionPane.showMessageDialog(this, "Não foi possível atualizar o pedido", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao editar venda", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private List<ItemPedidoModel> prepararItensPedido(PedidoModel pedidoModel) {
         List<ItemPedidoModel> listaItensPedido = new ArrayList<>();
-        int linhas = jtProdutosVenda.getRowCount();
+        DefaultTableModel tabela = (DefaultTableModel) jtProdutos.getModel();
+        int linhas = tabela.getRowCount();
+
         for (int i = 0; i < linhas; i++) {
             ItemPedidoModel itemPedidoModel = new ItemPedidoModel();
             itemPedidoModel.setPedido(pedidoModel);
 
-            Long codigoProduto = Long.parseLong(jtProdutosVenda.getValueAt(i, 0).toString());
+            Long codigoProduto = Long.parseLong(tabela.getValueAt(i, 0).toString());
             ProdutoModel produtoModel = produtoController.retornarProdutoController(codigoProduto);
             itemPedidoModel.setProduto(produtoModel);
 
-            itemPedidoModel.setQuantidade(Double.parseDouble(jtProdutosVenda.getValueAt(i, 2).toString()));
-            itemPedidoModel.setValorUnitario(FormatarValor.formatarStringDouble(jtProdutosVenda.getValueAt(i, 3).toString()));
-            itemPedidoModel.setValorTotal(FormatarValor.formatarStringDouble(jtProdutosVenda.getValueAt(i, 4).toString()));
+            itemPedidoModel.setQuantidade(Double.parseDouble(tabela.getValueAt(i, 2).toString()));
+            itemPedidoModel.setValorUnitario(FormatarValor.formatarStringDouble(tabela.getValueAt(i, 3).toString()));
+            itemPedidoModel.setValorTotal(FormatarValor.formatarStringDouble(tabela.getValueAt(i, 4).toString()));
 
             listaItensPedido.add(itemPedidoModel);
         }
@@ -635,7 +718,7 @@ public class PedidoView extends javax.swing.JFrame {
         } else {
             produtoModel = produtoController.retornarProdutoController(Long.parseLong(jtfCodigoProduto.getText()));
             // Inicia a linha na tabela
-            DefaultTableModel modeloCadastro = (DefaultTableModel) jtProdutosVenda.getModel();
+            DefaultTableModel modeloCadastro = (DefaultTableModel) jtProdutos.getModel();
             int quantidade = Integer.parseInt(jtfQuantidade.getText());
             NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
             int contador = 0;
@@ -674,10 +757,10 @@ public class PedidoView extends javax.swing.JFrame {
     }
 
     private void editarQuantidadeProdutoTabela() {
-        int linha = jtProdutosVenda.getSelectedRow();
-        DefaultTableModel modeloCadastro = (DefaultTableModel) jtProdutosVenda.getModel();
+        int linha = jtProdutos.getSelectedRow();
+        DefaultTableModel modeloCadastro = (DefaultTableModel) jtProdutos.getModel();
         NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
-        int quantidade = Integer.parseInt(jtProdutosVenda.getValueAt(linha, 2).toString());
+        int quantidade = Integer.parseInt(jtProdutos.getValueAt(linha, 2).toString());
 
         try {
             if (Enter == 0) {
@@ -698,6 +781,30 @@ public class PedidoView extends javax.swing.JFrame {
         }
     }
 
+    public void setPedidoModel(PedidoModel pedido) {
+        this.pedidoModel = pedido;
+        jtfCodigoCliente.setText(this.pedidoModel.getCliente().getCodigoCliente().toString());
+        campoPesquisaCliente.setText(this.pedidoModel.getCliente().getNomeCliente());
+        jtfCodigoPedido.setText(this.pedidoModel.getCodigoPedido().toString());
+        jtfValorTotal.setText(valorReal.format(this.pedidoModel.getValorPedido()));
+
+        List<ItemPedidoModel> listaProdutos = pedidoModel.getListaItens();
+        DefaultTableModel tabela = (DefaultTableModel) jtProdutos.getModel();
+        tabela.setNumRows(0);
+
+        for (ItemPedidoModel item : listaProdutos) {
+            int quantidade = (int) Math.round(item.getQuantidade());
+            tabela.addRow(new Object[]{
+                item.getCodigoItemPedido(),
+                item.getProduto().getDescricaoProduto(),
+                quantidade,
+                valorReal.format(item.getValorUnitario()),
+                valorReal.format(item.getValorTotal())
+            });
+        }
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnCancelar;
@@ -707,14 +814,16 @@ public class PedidoView extends javax.swing.JFrame {
     private javax.swing.JTextField campoPesquisaProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtProdutosVenda;
+    private javax.swing.JTable jtProdutos;
     private javax.swing.JFormattedTextField jtfCodigoCliente;
+    private javax.swing.JTextField jtfCodigoPedido;
     private javax.swing.JFormattedTextField jtfCodigoProduto;
     private javax.swing.JFormattedTextField jtfQuantidade;
     private javax.swing.JTextField jtfValorTotal;

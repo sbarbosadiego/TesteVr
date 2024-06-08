@@ -167,25 +167,22 @@ public class PedidoInfoView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(34, 34, 34))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(34, 34, 34))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(34, 34, 34))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtfCodigoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtfCodigoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jtfData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(34, 34, 34)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,31 +249,31 @@ public class PedidoInfoView extends javax.swing.JFrame {
         });
     }
 
-public void setPedidoModel(PedidoModel pedido) {
-    this.pedidoModel = pedido;
-    jtfCodigoPedido.setText(this.pedidoModel.getCodigoPedido().toString());
-    jtfCodigoCliente.setText(this.pedidoModel.getCliente().getCodigoCliente().toString());
-    jtfCliente.setText(this.pedidoModel.getCliente().getNomeCliente());
-    jtfData.setText(FormatarData.formatarDataTabela(this.pedidoModel.getDataPedido().toString()));
-    jtfValorTotal.setText(valorReal.format(this.pedidoModel.getValorPedido()));
-    
-    // Use List instead of ArrayList
-    List<ItemPedidoModel> listaProdutos = pedidoModel.getListaItens();
-    DefaultTableModel tabela = (DefaultTableModel) jtProdutos.getModel();
-    tabela.setNumRows(0);
+    public void setPedidoModel(PedidoModel pedido) {
+        this.pedidoModel = pedido;
+        jtfCodigoPedido.setText(this.pedidoModel.getCodigoPedido().toString());
+        jtfCodigoCliente.setText(this.pedidoModel.getCliente().getCodigoCliente().toString());
+        jtfCliente.setText(this.pedidoModel.getCliente().getNomeCliente());
+        jtfData.setText(FormatarData.formatarDataTabela(this.pedidoModel.getDataPedido().toString()));
+        jtfValorTotal.setText(valorReal.format(this.pedidoModel.getValorPedido()));
 
-    for (ItemPedidoModel item : listaProdutos) {
-        tabela.addRow(new Object[]{
-            item.getCodigoItemPedido(),
-            item.getProduto().getDescricaoProduto(),
-            item.getQuantidade(),
-            valorReal.format(item.getValorUnitario()),
-            valorReal.format(item.getValorTotal())
-        });
+        List<ItemPedidoModel> listaProdutos = pedidoModel.getListaItens();
+        DefaultTableModel tabela = (DefaultTableModel) jtProdutos.getModel();
+        tabela.setNumRows(0);
+
+        for (ItemPedidoModel item : listaProdutos) {
+            int quantidade = (int) Math.round(item.getQuantidade());
+
+            tabela.addRow(new Object[]{
+                item.getCodigoItemPedido(),
+                item.getProduto().getDescricaoProduto(),
+                quantidade,
+                valorReal.format(item.getValorUnitario()),
+                valorReal.format(item.getValorTotal())
+            });
+        }
     }
-}
-    
-    
+
     public void listarItensPedidos() {
         String texto = jtfCodigoPedido.getText();
         Long codigoPedido = Long.parseLong(texto);

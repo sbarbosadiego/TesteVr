@@ -27,7 +27,6 @@ public class ProdutoModel implements Serializable {
     @Column(name = "descricao_produto", length = 151, nullable = false)
     private String descricaoProduto;
 
-    @Min(value = 0, message = "O valor do produto não pode ser negativo")
     @Column(name = "valor_produto", nullable = false)
     private Double valorProduto;
 

@@ -8,41 +8,37 @@ import org.junit.Test;
  */
 public class FormatarValorTest {
     
+@Test(expected = NumberFormatException.class)
+    public void testFormatarStringDouble_InvalidInput() {
+        String input = "invalid";
+        FormatarValor.formatarStringDouble(input);
+    }
+
     @Test
     public void testFormatarStringDouble_ValidInput() {
-        String input = "R$ 7.749,51";
-        double expected = 7749.51;
-        double result = FormatarValor.formatarStringDouble(input);
-        assertEquals(expected, result, 0.0001);
-    }
-    
-    @Test
-    public void testFormatarStringDouble_ValidInputNoCurrencySymbol() {
-        String input = "7.749,51";
-        double expected = 7749.51;
-        double result = FormatarValor.formatarStringDouble(input);
-        assertEquals(expected, result, 0.0001);
-    }
-
-    @Test
-    public void testFormatarStringDouble_ValidInputWithSpaces() {
-        String input = "  7.749,51  ";
-        double expected = 7749.51;
-        double result = FormatarValor.formatarStringDouble(input);
-        assertEquals(expected, result, 0.0001);
-    }
-
-    @Test
-    public void testFormatarStringDouble_SingleDigit() {
-        String input = "7,0";
-        double expected = 7.0;
-        double result = FormatarValor.formatarStringDouble(input);
-        assertEquals(expected, result, 0.0001);
+        String input = "1234,56";
+        Double expected = 1234.56;
+        Double actual = FormatarValor.formatarStringDouble(input);
+        assertEquals(expected, actual);
     }
 
     @Test(expected = NumberFormatException.class)
-    public void testFormatarStringDouble_InvalidInput() {
-        String input = "invalid";
+    public void testFormatarStringDouble_EmptyInput() {
+        String input = "";
+        FormatarValor.formatarStringDouble(input);
+    }
+
+    @Test
+    public void testFormatarStringDouble_ValidInputWithSpecialChars() {
+        String input = "R$ 1.234,56";
+        Double expected = 1234.56;
+        Double actual = FormatarValor.formatarStringDouble(input);
+        assertEquals(expected, actual);
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void testFormatarStringDouble_InvalidNumberFormat() {
+        String input = "12,34.56";
         FormatarValor.formatarStringDouble(input);
     }
     
