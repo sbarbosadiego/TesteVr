@@ -3,7 +3,6 @@ package com.testevr.view;
 import com.testevr.controller.ClienteController;
 import com.testevr.model.ClienteModel;
 import com.testevr.util.FormatarValor;
-import com.testevr.util.FormatarData;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Locale;
@@ -16,7 +15,6 @@ public class ClienteView extends javax.swing.JFrame {
 
     // Data
     LocalDate dataAtual = LocalDate.now();
-    int mesAtual = dataAtual.getMonthValue();
     Locale localeBR = new Locale("pt", "BR");
     NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
 

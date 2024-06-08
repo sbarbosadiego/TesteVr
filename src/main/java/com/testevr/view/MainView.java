@@ -20,7 +20,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Locale;
@@ -99,7 +98,6 @@ public class MainView extends javax.swing.JFrame {
         telaPedido = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jtbPedidos = new javax.swing.JTable();
-        btnEditarPedido = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jtfPesquisarPedido = new javax.swing.JTextField();
         btnAtualizarTabelaPedidos = new javax.swing.JButton();
@@ -374,14 +372,6 @@ public class MainView extends javax.swing.JFrame {
             jtbPedidos.getColumnModel().getColumn(1).setMaxWidth(200);
         }
 
-        btnEditarPedido.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnEditarPedido.setText("Editar");
-        btnEditarPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarPedidoActionPerformed(evt);
-            }
-        });
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("Pesquisar:");
 
@@ -461,8 +451,6 @@ public class MainView extends javax.swing.JFrame {
                     .addGroup(telaPedidoLayout.createSequentialGroup()
                         .addComponent(btnNovoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEditarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(btnExcluirPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnVisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -483,11 +471,10 @@ public class MainView extends javax.swing.JFrame {
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(telaPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNovoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExcluirPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Pedidos", telaPedido);
@@ -536,7 +523,7 @@ public class MainView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
@@ -595,11 +582,6 @@ public class MainView extends javax.swing.JFrame {
         excluirProduto();
     }//GEN-LAST:event_btnExcluirProdutoActionPerformed
 
-    private void btnEditarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPedidoActionPerformed
-        editarSalvar = "editar";
-        editarPedido();
-    }//GEN-LAST:event_btnEditarPedidoActionPerformed
-
     private void jtfPesquisarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfPesquisarPedidoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfPesquisarPedidoActionPerformed
@@ -610,15 +592,13 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAtualizarTabelaPedidosActionPerformed
 
     private void btnPesquisarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarPedidoActionPerformed
-        /*
-        if (jcbFiltroMatricula.getEditor().getItem().equals("Aluno")) {
-            listarMatriculaNomeAluno(jtfPesquisarMatricula.getText());
-        } else if (jcbFiltroMatricula.getEditor().getItem().equals("Curso")) {
-            listarMatriculaNomeCurso(jtfPesquisarMatricula.getText());
-        } else if (jcbFiltroMatricula.getEditor().getItem().equals("Matrícula")) {
-            listarMatriculaId(Long.valueOf(jtfPesquisarMatricula.getText()));
+        if (jcbFiltroPedido.getEditor().getItem().toString().equals("Cliente")) {
+            listarPedidoNomeCliente(jtfPesquisarPedido.getText().toUpperCase());
+        } else if (jcbFiltroPedido.getEditor().getItem().toString().equals("Data")) {
+            //listarPedidoData(FormatarData.formatarDataTabela(jtfPesquisarPedido.getText()));
+        } else if (jcbFiltroPedido.getEditor().getItem().equals("Produto")) {
+            //listarMatriculaId(Long.valueOf(jtfPesquisarPedido.getText()));
         }
-         */
     }//GEN-LAST:event_btnPesquisarPedidoActionPerformed
 
     private void btnNovoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoPedidoActionPerformed
@@ -765,27 +745,6 @@ public class MainView extends javax.swing.JFrame {
             produtoView.setProdutoModel(produtoModel);
             this.setEnabled(false);
             produtoView.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Nenhum registro selecionado");
-            e.printStackTrace();
-        }
-    }
-
-    private void editarPedido() {
-        int linha = jtbPedidos.getSelectedRow();
-        try {
-            Long codigoPedido = (Long) jtbPedidos.getValueAt(linha, 0);
-            pedidoModel = pedidoController.retornarPedidoController(codigoPedido);
-            PedidoView pedidoView = new PedidoView(this);
-            pedidoView.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) {
-                    setEnabled(true);
-                }
-            });
-            pedidoView.setPedidoModel(pedidoModel);
-            this.setEnabled(false);
-            pedidoView.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Nenhum registro selecionado");
             e.printStackTrace();
@@ -949,65 +908,33 @@ public class MainView extends javax.swing.JFrame {
         }
     }
 
-    /*
-    public void listarMatriculaNomeAluno(String nome) {
-        listaCursoAlunoModel = (ArrayList<CursoAlunoModel>) cursoAlunoController.retornarListarMatriculaAlunosController(nome);
-        DefaultTableModel tabela = (DefaultTableModel) jtbMatricula.getModel();
+    public void listarPedidoNomeCliente(String nome) {
+        listaPedidos = (ArrayList<PedidoModel>) pedidoController.retornarListaClienteController(nome);
+        DefaultTableModel tabela = (DefaultTableModel) jtbPedidos.getModel();
         tabela.setNumRows(0);
 
-        int contador = listaCursoAlunoModel.size();
+        int contador = listaPedidos.size();
         for (int c = 0; c < contador; c++) {
-            AlunoModel alunoModel = listaCursoAlunoModel.get(c).getCodigoAluno();
-            CursoModel cursoModel = listaCursoAlunoModel.get(c).getCodigoCurso();
+            ClienteModel clienteModel = listaPedidos.get(c).getCliente();
 
-            Long codigoAluno = alunoModel.getCodigoAluno();
-            String nomeAluno = alunoModel.getNomeAluno();
-            String nomeCurso = cursoModel.getDescricaoCurso();
+            Long codigoCliente = clienteModel.getCodigoCliente();
+            String nomeCliente = clienteModel.getNomeCliente();
 
             tabela.addRow(new Object[]{
-                listaCursoAlunoModel.get(c).getCodigoCursoAluno(),
-                codigoAluno,
-                nomeAluno,
-                nomeCurso,
-                listaCursoAlunoModel.get(c).getDataCriacao().format(DateTimeFormatter.ISO_LOCAL_DATE)
+                listaPedidos.get(c).getCodigoPedido(),
+                codigoCliente,
+                nomeCliente,
+                valorReal.format(listaPedidos.get(c).getValorPedido()),
+                FormatarData.formatarDataTabela(listaPedidos.get(c).getDataPedido().toString())
             });
         }
     }
-
-    public void listarMatriculaNomeCurso(String nome) {
-        listaCursoAlunoModel = (ArrayList<CursoAlunoModel>) cursoAlunoController.retornarListarMatriculaCursosController(nome);
-        DefaultTableModel tabela = (DefaultTableModel) jtbMatricula.getModel();
-        tabela.setNumRows(0);
-
-        int contador = listaCursoAlunoModel.size();
-        for (int c = 0; c < contador; c++) {
-            AlunoModel alunoModel = listaCursoAlunoModel.get(c).getCodigoAluno();
-            CursoModel cursoModel = listaCursoAlunoModel.get(c).getCodigoCurso();
-
-            Long codigoAluno = alunoModel.getCodigoAluno();
-            String nomeAluno = alunoModel.getNomeAluno();
-            String nomeCurso = cursoModel.getDescricaoCurso();
-
-            tabela.addRow(new Object[]{
-                listaCursoAlunoModel.get(c).getCodigoCursoAluno(),
-                codigoAluno,
-                nomeAluno,
-                nomeCurso,
-                listaCursoAlunoModel.get(c).getDataCriacao().format(DateTimeFormatter.ISO_LOCAL_DATE)
-            });
-        }
-    }
-    
-    }
-    
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizarTabelaCliente;
     private javax.swing.JButton btnAtualizarTabelaPedidos;
     private javax.swing.JButton btnAtualizarTabelaProduto;
     private javax.swing.JButton btnEditarCliente;
-    private javax.swing.JButton btnEditarPedido;
     private javax.swing.JButton btnEditarProduto;
     private javax.swing.JButton btnExcluirCliente;
     private javax.swing.JButton btnExcluirPedido;

@@ -35,7 +35,7 @@ public class ClienteModel implements Serializable {
 
     @Column(name = "dia_fechamento", nullable = false)
     private int diaFechamentoFatura;
-    
+
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PedidoModel> pedidos;
 
@@ -54,12 +54,12 @@ public class ClienteModel implements Serializable {
         }
         this.limiteCompra = limiteCompra;
     }
-    
-    public void setDiaFechamento (int diaFechamento) {
+
+    public void setDiaFechamento(int diaFechamento) {
         if (diaFechamento < 1 || diaFechamento > 31) {
             throw new IllegalArgumentException("O dia de fechamento deve estar entre 1 e 31.");
         }
         this.diaFechamentoFatura = diaFechamento;
     }
-    
+
 }

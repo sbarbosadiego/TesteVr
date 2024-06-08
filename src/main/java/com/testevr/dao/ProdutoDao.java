@@ -15,11 +15,11 @@ public class ProdutoDao extends GenericDao<ProdutoModel> {
         super(ProdutoModel.class);
     }
 
-    public List<ProdutoModel> retornarListaProdutoNome(String nome) {
+    public List<ProdutoModel> retornarListaProdutoNome(String produto) {
         try {
             List<ProdutoModel> listaProdutos = entityManager
                     .createQuery("SELECT u FROM produtos u WHERE u.descricaoProduto LIKE :nome", ProdutoModel.class)
-                    .setParameter("nome", "%" + nome + "%")
+                    .setParameter("nome", "%" + produto + "%")
                     .getResultList();
             return listaProdutos;
         } catch (NoResultException | NonUniqueResultException e) {
@@ -30,12 +30,12 @@ public class ProdutoDao extends GenericDao<ProdutoModel> {
         return null;
     }
 
-    public ProdutoModel retornarProdutoNome(String nome) {
+    public ProdutoModel retornarProdutoNome(String produto) {
         ProdutoModel produtoModel = new ProdutoModel();
         try {
             produtoModel = entityManager
                     .createQuery("SELECT u FROM produtos u WHERE u.descricaoProduto LIKE :nome", ProdutoModel.class)
-                    .setParameter("nome", "%" + nome + "%")
+                    .setParameter("nome", "%" + produto + "%")
                     .setMaxResults(1)
                     .getSingleResult();
             return produtoModel;

@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ProdutoController {
 
-    GenericDao<ProdutoModel> produtoDao = new GenericDao<>(ProdutoModel.class);
+    private GenericDao<ProdutoModel> produtoDao = new GenericDao<>(ProdutoModel.class);
     private ProdutoDao produtoDaoClasse = new ProdutoDao();
 
     public int salvarProdutoController(ProdutoModel produto) {

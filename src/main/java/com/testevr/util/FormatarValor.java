@@ -8,7 +8,7 @@ import java.util.Locale;
  * @author Diego Barbosa
  */
 public class FormatarValor {
-    
+
     public static Double formatarStringDouble(String texto) {
         double valorFormatado = 0.0;
         try {
@@ -24,5 +24,5 @@ public class FormatarValor {
             throw new NumberFormatException("O valor digitado não é válido");
         }
     }
-    
+
 }

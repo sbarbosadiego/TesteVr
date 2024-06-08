@@ -1,6 +1,7 @@
 package com.testevr.controller;
 
 import com.testevr.dao.GenericDao;
+import com.testevr.dao.PedidoDao;
 import com.testevr.model.PedidoModel;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public class PedidoController {
 
     private GenericDao<PedidoModel> pedidoDao = new GenericDao<>(PedidoModel.class);
+    private PedidoDao pedidoDaoClasse = new PedidoDao();
 
     public int salvarPedidoController(PedidoModel pedido) {
         return this.pedidoDao.salvar(pedido);
@@ -29,6 +31,10 @@ public class PedidoController {
 
     public List<PedidoModel> retornarListaPedidosController() {
         return this.pedidoDao.retornarLista();
+    }
+
+    public List<PedidoModel> retornarListaClienteController(String nome) {
+        return this.pedidoDaoClasse.retornarListaPedidoNome(nome);
     }
 
 }

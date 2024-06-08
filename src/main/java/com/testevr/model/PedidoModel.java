@@ -66,7 +66,7 @@ public class PedidoModel implements Serializable {
             adicionarItem(item);
         }
     }
-    
+
     public void atualizarValorPedido() {
         double total = 0.0;
         for (ItemPedidoModel item : listaItens) {

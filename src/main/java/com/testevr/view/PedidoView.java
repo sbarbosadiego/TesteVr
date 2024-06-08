@@ -410,31 +410,10 @@ public class PedidoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jtProdutosKeyReleased
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        DefaultTableModel tabela = (DefaultTableModel) jtProdutos.getModel();
-        int rowCount = tabela.getRowCount();
-        int columnCount = tabela.getColumnCount();
-
-        System.out.println("Conteúdo da tabela jtProdutos:");
-
-        for (int row = 0; row < rowCount; row++) {
-            System.out.print("Linha " + (row + 1) + ": ");
-            for (int col = 0; col < columnCount; col++) {
-                Object value = tabela.getValueAt(row, col);
-                System.out.print(value + " ");
-            }
-            System.out.println();
-        }
-
         if (mainView.editarSalvar.equals("salvar")) {
             salvarPedido();
-            dispose();
-            mainView.setEnabled(true);
-        } else if (mainView.editarSalvar.equals("editar")) {
-            editarPedido();
-            dispose();
             mainView.setEnabled(true);
         }
-
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void jtfCodigoProdutoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfCodigoProdutoKeyReleased
@@ -597,92 +576,41 @@ public class PedidoView extends javax.swing.JFrame {
         try {
             if (jtfCodigoCliente.getText().isBlank()) {
                 JOptionPane.showMessageDialog(null, "Cliente não informado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
-                return;
             }
             // Recuperar o cliente
             Long codigoCliente = Long.parseLong(jtfCodigoCliente.getText());
             ClienteModel clienteModel = clienteController.retornarClienteController(codigoCliente);
             if (clienteModel == null) {
                 JOptionPane.showMessageDialog(null, "Cliente não encontrado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
-                return;
             }
-            validador.validarCredito(clienteModel, FormatarValor.formatarStringDouble(jtfValorTotal.getText()));
+            if (validador.validarCredito(clienteModel, FormatarValor.formatarStringDouble(jtfValorTotal.getText()))) {
 
-            // Criar e preencher o PedidoModel
-            PedidoModel pedidoModel = new PedidoModel();
-            pedidoModel.setCliente(clienteModel);
-            pedidoModel.setDataPedido(dataAtual);
-            pedidoModel.setValorPedido(FormatarValor.formatarStringDouble(jtfValorTotal.getText()));
-
-            // Preparar e adicionar os itens ao PedidoModel
-            List<ItemPedidoModel> listaItensPedido = prepararItensPedido(pedidoModel);
-            pedidoModel.adicionarItens(listaItensPedido);
-
-            // Salvar o pedido com os itens
-            int codigoVenda = pedidoController.salvarPedidoController(pedidoModel);
-            if (codigoVenda > 0) {
-                pedidoModel.setCodigoPedido((long) codigoVenda);
-                JOptionPane.showMessageDialog(this, "Pedido salvo com sucesso", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
-                limparTela();
-                mainView.listarPedidos();
             } else {
-                JOptionPane.showMessageDialog(this, "Código de venda gerado inválido", "ERRO", JOptionPane.ERROR_MESSAGE);
+                // Criar e preencher o PedidoModel
+                PedidoModel pedidoModel = new PedidoModel();
+                pedidoModel.setCliente(clienteModel);
+                pedidoModel.setDataPedido(dataAtual);
+                pedidoModel.setValorPedido(FormatarValor.formatarStringDouble(jtfValorTotal.getText()));
+
+                // Preparar e adicionar os itens ao PedidoModel
+                List<ItemPedidoModel> listaItensPedido = prepararItensPedido(pedidoModel);
+                pedidoModel.adicionarItens(listaItensPedido);
+
+                // Salvar o pedido com os itens
+                int codigoVenda = pedidoController.salvarPedidoController(pedidoModel);
+                if (codigoVenda > 0) {
+                    pedidoModel.setCodigoPedido((long) codigoVenda);
+                    JOptionPane.showMessageDialog(this, "Pedido salvo com sucesso", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
+                    limparTela();
+                    mainView.listarPedidos();
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Código de venda gerado inválido", "ERRO", JOptionPane.ERROR_MESSAGE);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao salvar venda", "ERRO", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void editarPedido() {
-        try {
-            if (jtfCodigoPedido.getText().isBlank()) {
-                JOptionPane.showMessageDialog(null, "Código do pedido não informado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            // Recupera o pedido
-            Long codigoPedido = Long.parseLong(jtfCodigoPedido.getText());
-            PedidoModel pedidoExistente = pedidoController.retornarPedidoController(codigoPedido);
-            if (pedidoExistente == null) {
-                JOptionPane.showMessageDialog(null, "Pedido não encontrado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            if (jtfCodigoCliente.getText().isBlank()) {
-                JOptionPane.showMessageDialog(null, "Cliente não informado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            // Recupera o cliente
-            Long codigoCliente = Long.parseLong(jtfCodigoCliente.getText());
-            ClienteModel clienteModel = clienteController.retornarClienteController(codigoCliente);
-            if (clienteModel == null) {
-                JOptionPane.showMessageDialog(null, "Cliente não encontrado", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            //validador.validarCredito(clienteModel, FormatarValor.formatarStringDouble(jtfValorTotal.getText()));
-
-            // Atualizar os dados do pedido existente
-            pedidoExistente.setCliente(clienteModel);
-            pedidoExistente.setDataPedido(dataAtual);
-            pedidoExistente.setValorPedido(FormatarValor.formatarStringDouble(jtfValorTotal.getText()));
-
-            // Preparar e adicionar os itens ao PedidoModel
-            //List<ItemPedidoModel> listaItensPedido = prepararItensPedido(pedidoExistente);
-            pedidoExistente.setListaItens(listaItensPedido);
-
-            // Atualizar o pedido com os itens
-            if (pedidoController.atualizarPedidoController(pedidoExistente)) {
-                JOptionPane.showMessageDialog(this, "Pedido atualizado com sucesso", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
-                limparTela();
-                mainView.listarPedidos();
-            } else {
-                JOptionPane.showMessageDialog(this, "Não foi possível atualizar o pedido", "ERRO", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Erro ao editar venda", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
 

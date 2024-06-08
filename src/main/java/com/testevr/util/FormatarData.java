@@ -8,6 +8,11 @@ import java.time.LocalDate;
  */
 public class FormatarData {
 
+    /**
+     * Formata String para LocalDate com formato yyyy/MM/dd
+     * @param data
+     * @return LocalDate
+     */
     public static LocalDate formatarDataLocalDate(String data) {
         int diaFormatado;
         int mesFormatado;
@@ -30,6 +35,11 @@ public class FormatarData {
         }
     }
 
+    /**
+     * Formata LocalDate para uma String em data no formato dd/MM/yyyy
+     * @param data
+     * @return String
+     */
     public static String formatarDataTexto(LocalDate data) {
         String dataTexto;
         if (data == null) {
