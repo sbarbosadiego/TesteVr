@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package com.testevr.view;
 
 import com.testevr.controller.ProdutoController;
@@ -167,7 +171,6 @@ public class ProdutoView extends javax.swing.JFrame {
     private void btnSalvarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarProdutoActionPerformed
         if (mainView.editarSalvar.equals("salvar")) {
             salvarProduto();
-            dispose();
             mainView.setEnabled(true);
         } else if (mainView.editarSalvar.equals("editar")) {
             editarProduto();
@@ -227,7 +230,7 @@ public class ProdutoView extends javax.swing.JFrame {
         if (jtfNomeProduto.getText().isEmpty() || jtfValorProduto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo vazio!", "ATENÇÃO",
                     JOptionPane.WARNING_MESSAGE);
-        } else if (jtfNomeProduto.getText().length() >= 150) {
+        } else if (jtfNomeProduto.getText().length() >= 151) {
             JOptionPane.showMessageDialog(null, "Campo descrição excede o limite de 150 caracteres!", "ATENÇÃO",
                     JOptionPane.WARNING_MESSAGE);
         } else {
@@ -237,6 +240,7 @@ public class ProdutoView extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso", "ATENÇÃO",
                         JOptionPane.INFORMATION_MESSAGE);
                 mainView.listarProdutos();
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Produto não cadastrado", "ATENÇÃO",
                         JOptionPane.INFORMATION_MESSAGE);

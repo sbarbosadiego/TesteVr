@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
- *
- * @author di_an
+ * @author Diego Barbosa
  */
 public class PedidoInfoView extends javax.swing.JFrame {
 
@@ -37,6 +37,9 @@ public class PedidoInfoView extends javax.swing.JFrame {
     public PedidoInfoView(MainView mainView) {
         initComponents();
         this.mainView = mainView;
+
+        DefaultTableModel modelo = (DefaultTableModel) jtProdutos.getModel();
+        jtProdutos.setRowSorter(new TableRowSorter(modelo));
     }
 
     public PedidoInfoView() {
@@ -265,7 +268,7 @@ public class PedidoInfoView extends javax.swing.JFrame {
             int quantidade = (int) Math.round(item.getQuantidade());
 
             tabela.addRow(new Object[]{
-                item.getCodigoItemPedido(),
+                item.getProduto().getCodigoProduto(),
                 item.getProduto().getDescricaoProduto(),
                 quantidade,
                 valorReal.format(item.getValorUnitario()),

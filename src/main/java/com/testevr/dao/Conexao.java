@@ -19,6 +19,14 @@ public class Conexao {
         }
     }
 
-    protected EntityManager entityManager = factory.createEntityManager();
+    protected EntityManager getEntityManager() {
+        return factory.createEntityManager();
+    }
+
+    public static void close() {
+        if (factory != null && factory.isOpen()) {
+            factory.close();
+        }
+    }
 
 }

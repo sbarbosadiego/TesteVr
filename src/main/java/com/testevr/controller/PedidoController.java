@@ -36,5 +36,9 @@ public class PedidoController {
     public List<PedidoModel> retornarListaClienteController(String nome) {
         return this.pedidoDaoClasse.retornarListaPedidoNome(nome);
     }
+    
+    public boolean clientePossuiPedidos(Long id) {
+        return this.pedidoDaoClasse.clientePossuiPedidos(id);
+    }
 
 }

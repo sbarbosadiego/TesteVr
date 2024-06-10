@@ -10,73 +10,64 @@ public class FormatarData {
 
     /**
      * Formata String para LocalDate com formato yyyy/MM/dd
+     *
      * @param data
      * @return LocalDate
      */
     public static LocalDate formatarDataLocalDate(String data) {
-        int diaFormatado;
-        int mesFormatado;
-        int anoFormatado;
         if (data == null || data.length() < 10) {
-            return null;
+            throw new IllegalArgumentException("A data informada não é válida");
         }
         try {
             String dia = data.substring(0, 2);
             String mes = data.substring(3, 5);
             String ano = data.substring(6, 10);
-            diaFormatado = Integer.parseInt(dia);
-            mesFormatado = Integer.parseInt(mes);
-            anoFormatado = Integer.parseInt(ano);
+            int diaFormatado = Integer.parseInt(dia);
+            int mesFormatado = Integer.parseInt(mes);
+            int anoFormatado = Integer.parseInt(ano);
             return LocalDate.of(anoFormatado, mesFormatado, diaFormatado);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException("A data informada não é válida");
-        } catch (DateTimeException e) {
-            throw new DateTimeException("Data inválida");
+        } catch (NumberFormatException | DateTimeException e) {
+            throw new IllegalArgumentException("A data informada não é válida", e);
         }
     }
 
     /**
      * Formata LocalDate para uma String em data no formato dd/MM/yyyy
+     *
      * @param data
      * @return String
      */
     public static String formatarDataTexto(LocalDate data) {
-        String dataTexto;
         if (data == null) {
             throw new IllegalArgumentException("A data não pode ser vazia");
         }
         try {
-            dataTexto = data.toString();
-            if (dataTexto == null || dataTexto.length() < 10) {
-                throw new DateTimeException("Formato de data inválido");
-            }
-            String ano = dataTexto.substring(0, 4);
-            String mes = dataTexto.substring(5, 7);
-            String dia = dataTexto.substring(8, 10);
-            dataTexto = dia + "/" + mes + "/" + ano;
-            return dataTexto;
+            String ano = String.format("%04d", data.getYear());
+            String mes = String.format("%02d", data.getMonthValue());
+            String dia = String.format("%02d", data.getDayOfMonth());
+            return dia + "/" + mes + "/" + ano;
         } catch (DateTimeException e) {
-            throw new DateTimeException("Data inválida");
+            throw new IllegalArgumentException("Data inválida", e);
         }
     }
-    
+
+    /**
+     * Formata uma String no formato yyyy/MM/dd para uma String dd/MM/yyyy
+     *
+     * @param data
+     * @return String
+     */
     public static String formatarDataTabela(String data) {
-        String dataTexto;
-        if (data == null) {
+        if (data == null || data.length() < 10) {
             throw new IllegalArgumentException("A data não pode ser vazia");
         }
         try {
-            dataTexto = data.toString();
-            if (dataTexto == null || dataTexto.length() < 10) {
-                throw new DateTimeException("Formato de data inválido");
-            }
-            String ano = dataTexto.substring(0, 4);
-            String mes = dataTexto.substring(5, 7);
-            String dia = dataTexto.substring(8, 10);
-            dataTexto = dia + "/" + mes + "/" + ano;
-            return dataTexto;
+            String ano = data.substring(0, 4);
+            String mes = data.substring(5, 7);
+            String dia = data.substring(8, 10);
+            return dia + "/" + mes + "/" + ano;
         } catch (DateTimeException e) {
-            throw new DateTimeException("Data inválida");
+            throw new IllegalArgumentException("Data inválida", e);
         }
     }
 

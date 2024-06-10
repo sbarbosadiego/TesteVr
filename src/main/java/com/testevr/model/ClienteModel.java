@@ -27,7 +27,7 @@ public class ClienteModel implements Serializable {
     @Column(name = "pk_codigo_cliente")
     private Long codigoCliente;
 
-    @Column(name = "nome_cliente", length = 101, nullable = false)
+    @Column(name = "nome_cliente", length = 100, nullable = false)
     private String nomeCliente;
 
     @Column(name = "limite_compra", nullable = false)
@@ -40,7 +40,7 @@ public class ClienteModel implements Serializable {
     private List<PedidoModel> pedidos;
 
     public void setNomeCliente(String nome) {
-        if (nome.length() >= 100) {
+        if (nome.length() >= 101) {
             throw new ClienteException("O nome do cliente ultrapassa o limite de 100 caracteres!");
         } else if (nome.isEmpty()) {
             throw new ClienteException("O nome do cliente não foi informado!");

@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package com.testevr.view;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
@@ -5,6 +9,7 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.testevr.controller.ClienteController;
+import com.testevr.controller.ItemPedidoController;
 import com.testevr.controller.PedidoController;
 import com.testevr.controller.ProdutoController;
 import com.testevr.model.ClienteModel;
@@ -19,7 +24,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.NumberFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Locale;
@@ -32,7 +36,6 @@ import javax.swing.table.DefaultTableModel;
 public class MainView extends javax.swing.JFrame {
 
     // Data Atual e Localidade
-    LocalDate agora = LocalDate.now();
     Locale localeBR = new Locale("pt", "BR");
     NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
 
@@ -50,6 +53,9 @@ public class MainView extends javax.swing.JFrame {
     PedidoModel pedidoModel = new PedidoModel();
     PedidoController pedidoController = new PedidoController();
     ArrayList<PedidoModel> listaPedidos = new ArrayList<>();
+
+    // Item Pedido
+    ItemPedidoController itemPedidoController = new ItemPedidoController();
 
     // Funcional
     String editarSalvar;
@@ -137,6 +143,12 @@ public class MainView extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jtbCliente);
+        if (jtbCliente.getColumnModel().getColumnCount() > 0) {
+            jtbCliente.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jtbCliente.getColumnModel().getColumn(1).setPreferredWidth(300);
+            jtbCliente.getColumnModel().getColumn(2).setPreferredWidth(40);
+            jtbCliente.getColumnModel().getColumn(3).setPreferredWidth(100);
+        }
 
         btnEditarCliente.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnEditarCliente.setText("Editar");
@@ -252,6 +264,11 @@ public class MainView extends javax.swing.JFrame {
             }
         });
         jScrollPane4.setViewportView(jtbProduto);
+        if (jtbProduto.getColumnModel().getColumnCount() > 0) {
+            jtbProduto.getColumnModel().getColumn(0).setPreferredWidth(30);
+            jtbProduto.getColumnModel().getColumn(1).setPreferredWidth(400);
+            jtbProduto.getColumnModel().getColumn(2).setPreferredWidth(100);
+        }
 
         btnEditarProduto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnEditarProduto.setText("Editar");
@@ -368,8 +385,11 @@ public class MainView extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(jtbPedidos);
         if (jtbPedidos.getColumnModel().getColumnCount() > 0) {
-            jtbPedidos.getColumnModel().getColumn(0).setMaxWidth(200);
-            jtbPedidos.getColumnModel().getColumn(1).setMaxWidth(200);
+            jtbPedidos.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jtbPedidos.getColumnModel().getColumn(1).setPreferredWidth(40);
+            jtbPedidos.getColumnModel().getColumn(2).setPreferredWidth(300);
+            jtbPedidos.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jtbPedidos.getColumnModel().getColumn(4).setPreferredWidth(100);
         }
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -595,9 +615,9 @@ public class MainView extends javax.swing.JFrame {
         if (jcbFiltroPedido.getEditor().getItem().toString().equals("Cliente")) {
             listarPedidoNomeCliente(jtfPesquisarPedido.getText().toUpperCase());
         } else if (jcbFiltroPedido.getEditor().getItem().toString().equals("Data")) {
-            //listarPedidoData(FormatarData.formatarDataTabela(jtfPesquisarPedido.getText()));
+            //listarPedidoData(jtfPesquisarPedido.getText());
         } else if (jcbFiltroPedido.getEditor().getItem().equals("Produto")) {
-            //listarMatriculaId(Long.valueOf(jtfPesquisarPedido.getText()));
+            //listarPedidoProdutosPedidos(jtfPesquisarPedido.getText());
         }
     }//GEN-LAST:event_btnPesquisarPedidoActionPerformed
 
@@ -667,9 +687,6 @@ public class MainView extends javax.swing.JFrame {
         });
     }
 
-    /**
-     * Método para abrir a tela de cadastro cliente.
-     */
     private void salvarNovoCliente() {
         editarSalvar = "salvar";
         ClienteView clienteView = new ClienteView(this);
@@ -777,7 +794,8 @@ public class MainView extends javax.swing.JFrame {
         Long codigoAluno = (Long) jtbCliente.getValueAt(linha, 0);
         if (JOptionPane.showConfirmDialog(this, "Excluir Cliente?", "Excluir",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (clienteController.excluirClienteController(codigoAluno)) {
+            if (!pedidoController.clientePossuiPedidos(codigoAluno)) {
+                clienteController.excluirClienteController(codigoAluno);
                 JOptionPane.showMessageDialog(this, "Cliente excluído", "ATENÇÃO",
                         JOptionPane.WARNING_MESSAGE);
                 listarClientes();
@@ -793,7 +811,8 @@ public class MainView extends javax.swing.JFrame {
         Long codigoProduto = (Long) jtbProduto.getValueAt(linha, 0);
         if (JOptionPane.showConfirmDialog(this, "Excluir Produto?", "Excluir",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            if (produtoController.excluirProdutoController(codigoProduto)) {
+            if (!itemPedidoController.produtoPossuiPedidos(codigoProduto)) {
+                produtoController.excluirProdutoController(codigoProduto);
                 JOptionPane.showMessageDialog(this, "Produto excluído", "ATENÇÃO",
                         JOptionPane.WARNING_MESSAGE);
                 listarProdutos();
@@ -910,6 +929,7 @@ public class MainView extends javax.swing.JFrame {
 
     public void listarPedidoNomeCliente(String nome) {
         listaPedidos = (ArrayList<PedidoModel>) pedidoController.retornarListaClienteController(nome);
+        listaPedidos.sort(Comparator.comparing(PedidoModel::getCodigoPedido));
         DefaultTableModel tabela = (DefaultTableModel) jtbPedidos.getModel();
         tabela.setNumRows(0);
 

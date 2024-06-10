@@ -23,14 +23,14 @@ public class ProdutoModel implements Serializable {
     @Column(name = "pk_codigo_produto")
     private Long codigoProduto;
 
-    @Column(name = "descricao_produto", length = 151, nullable = false)
+    @Column(name = "descricao_produto", length = 150, nullable = false)
     private String descricaoProduto;
 
     @Column(name = "valor_produto", nullable = false)
     private Double valorProduto;
 
     public void setDescricaoProduto(String nome) {
-        if (nome.length() >= 150) {
+        if (nome.length() >= 151) {
             throw new ClienteException("O nome do produto ultrapassa o limite de 150 caracteres!");
         } else if (nome.isEmpty()) {
             throw new ClienteException("O nome do produto nao foi informado!");

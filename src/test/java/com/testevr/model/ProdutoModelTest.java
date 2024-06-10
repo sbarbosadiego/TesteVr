@@ -19,7 +19,7 @@ public class ProdutoModelTest {
     }
 
     @Test
-    public void testSetDescricaoProdutoComDescricaoMuitoLonga() {
+    public void testSetDescricaoProdutoComDescricaoExtensa() {
         ProdutoModel produto = new ProdutoModel();
         String descricaoMuitoLonga = "A".repeat(151);
         try {

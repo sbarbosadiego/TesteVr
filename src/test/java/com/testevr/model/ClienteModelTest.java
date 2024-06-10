@@ -4,7 +4,6 @@ import com.testevr.exception.ClienteException;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,48 +20,48 @@ public class ClienteModelTest {
     }
 
     @Test
-    public void testSetNomeCliente_ValidName() {
+    public void testSetNomeClienteNomeValido() {
         String nome = "Cliente Válido";
         cliente.setNomeCliente(nome);
         assertEquals(nome, cliente.getNomeCliente());
     }
 
     @Test(expected = ClienteException.class)
-    public void testSetNomeCliente_NameTooLong() {
-        String nome = "A".repeat(101); // Nome com 101 caracteres
+    public void testSetNomeClienteNomeExtenso() {
+        String nome = "A".repeat(101);
         cliente.setNomeCliente(nome);
     }
 
     @Test(expected = ClienteException.class)
-    public void testSetNomeCliente_EmptyName() {
+    public void testSetNomeClienteNomeVazio() {
         cliente.setNomeCliente("");
     }
 
     @Test
-    public void testSetLimiteCompra_ValidLimit() {
+    public void testSetLimiteCompraLimiteValido() {
         Double limite = 1000.0;
         cliente.setLimiteCompra(limite);
         assertEquals(limite, cliente.getLimiteCompra());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSetLimiteCompra_NegativeLimit() {
+    public void testSetLimiteCompraValorNegativo() {
         cliente.setLimiteCompra(-500.0);
     }
 
     @Test
-    public void testSetDiaFechamento_ValidDay() {
+    public void testSetDiaFechamentoDiaValido() {
         cliente.setDiaFechamento(15);
         assertEquals(15, cliente.getDiaFechamentoFatura());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSetDiaFechamento_InvalidDay_LessThan1() {
+    public void testSetDiaFechamentoDiaInvalidoMenor() {
         cliente.setDiaFechamento(0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSetDiaFechamento_InvalidDay_GreaterThan31() {
+    public void testSetDiaFechamentoDiaInvalidoMaior() {
         cliente.setDiaFechamento(32);
     }
 

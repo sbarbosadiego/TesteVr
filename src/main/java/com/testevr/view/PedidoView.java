@@ -49,11 +49,6 @@ public class PedidoView extends javax.swing.JFrame {
     PedidoModel pedidoModel = new PedidoModel();
     PedidoController pedidoController = new PedidoController();
 
-    // Item Pedido
-    ItemPedidoModel itemPedidoModel = new ItemPedidoModel();
-    ItemPedidoController itemPedidoController = new ItemPedidoController();
-    List<ItemPedidoModel> listaItensPedido = new ArrayList<>();
-
     // Validador
     ValidadorCredito validador = new ValidadorCredito();
 
@@ -557,7 +552,6 @@ public class PedidoView extends javax.swing.JFrame {
         double somaTotal = 0, valor;
         int contador = jtProdutos.getRowCount();
         NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
-
         for (int i = 0; i < contador; i++) {
             String valorString = jtProdutos.getValueAt(i, 4).toString();
             try {
@@ -568,7 +562,6 @@ public class PedidoView extends javax.swing.JFrame {
                 System.out.println("Erro ao converter o valor: " + e.getMessage());
             }
         }
-
         jtfValorTotal.setText(valorReal.format(somaTotal));
     }
 
@@ -591,11 +584,9 @@ public class PedidoView extends javax.swing.JFrame {
                 pedidoModel.setCliente(clienteModel);
                 pedidoModel.setDataPedido(dataAtual);
                 pedidoModel.setValorPedido(FormatarValor.formatarStringDouble(jtfValorTotal.getText()));
-
                 // Preparar e adicionar os itens ao PedidoModel
                 List<ItemPedidoModel> listaItensPedido = prepararItensPedido(pedidoModel);
                 pedidoModel.adicionarItens(listaItensPedido);
-
                 // Salvar o pedido com os itens
                 int codigoVenda = pedidoController.salvarPedidoController(pedidoModel);
                 if (codigoVenda > 0) {
@@ -618,19 +609,15 @@ public class PedidoView extends javax.swing.JFrame {
         List<ItemPedidoModel> listaItensPedido = new ArrayList<>();
         DefaultTableModel tabela = (DefaultTableModel) jtProdutos.getModel();
         int linhas = tabela.getRowCount();
-
         for (int i = 0; i < linhas; i++) {
             ItemPedidoModel itemPedidoModel = new ItemPedidoModel();
             itemPedidoModel.setPedido(pedidoModel);
-
             Long codigoProduto = Long.parseLong(tabela.getValueAt(i, 0).toString());
             ProdutoModel produtoModel = produtoController.retornarProdutoController(codigoProduto);
             itemPedidoModel.setProduto(produtoModel);
-
             itemPedidoModel.setQuantidade(Double.parseDouble(tabela.getValueAt(i, 2).toString()));
             itemPedidoModel.setValorUnitario(FormatarValor.formatarStringDouble(tabela.getValueAt(i, 3).toString()));
             itemPedidoModel.setValorTotal(FormatarValor.formatarStringDouble(tabela.getValueAt(i, 4).toString()));
-
             listaItensPedido.add(itemPedidoModel);
         }
         return listaItensPedido;

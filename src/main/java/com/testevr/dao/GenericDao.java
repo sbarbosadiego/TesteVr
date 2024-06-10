@@ -1,5 +1,6 @@
 package com.testevr.dao;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import java.util.Collections;
@@ -17,78 +18,91 @@ public class GenericDao<T> extends Conexao {
         this.classe = classe;
     }
 
-    public int salvar(T classe) {
+    public int salvar(T entity) {
+        EntityManager entityManager = getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            entityManager.persist(classe);
+            entityManager.persist(entity);
             entityManager.getTransaction().commit();
             return 1;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            entityManager.getTransaction().rollback();
+            JOptionPane.showMessageDialog(null, "Erro ao salvar registro: " + e.getMessage());
             return 0;
+        } finally {
+            entityManager.close();
         }
     }
 
-    public boolean atualizar(T classe) {
+    public boolean atualizar(T entity) {
+        EntityManager entityManager = getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(classe);
+            entityManager.merge(entity);
             entityManager.getTransaction().commit();
             return true;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            entityManager.getTransaction().rollback();
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar registro: " + e.getMessage());
             return false;
+        } finally {
+            entityManager.close();
         }
     }
 
     public boolean excluir(Long id) {
-        T entity = null;
+        EntityManager entityManager = getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            entity = entityManager.find(classe, id);
+            T entity = entityManager.find(classe, id);
             if (entity != null) {
                 entityManager.remove(entity);
+                entityManager.getTransaction().commit();
+                return true;
+            } else {
+                entityManager.getTransaction().rollback();
+                JOptionPane.showMessageDialog(null, "Registro não encontrado para exclusão. ID: " + id);
+                return false;
             }
-            entityManager.getTransaction().commit();
-            return true;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            entityManager.getTransaction().rollback();
+            JOptionPane.showMessageDialog(null, "Erro ao excluir registro: " + e.getMessage());
             return false;
+        } finally {
+            entityManager.close();
         }
     }
 
-    /**
-     * Realiza a consulta ao banco de dados e retorna um único registro.
-     *
-     * @param id
-     * @return entity
-     */
     public T retornar(Long id) {
-        T entity = null;
+        EntityManager entityManager = getEntityManager();
         try {
-            entityManager.getTransaction().begin();
-            entity = entityManager.find(classe, id);
-            entityManager.getTransaction().commit();
+            T entity = entityManager.find(classe, id);
+            // Carrega a coleção associada para evitar LazyInitializationException
+            if (entity != null) {
+                entityManager.getTransaction().begin();
+                entityManager.refresh(entity); // Carrega todas as coleções preguiçosas
+                entityManager.getTransaction().commit();
+            }
+            return entity;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao retornar registro: " + e.getMessage());
+            return null;
+        } finally {
+            entityManager.close();
         }
-        return entity;
     }
 
-    /**
-     * Retorna uma lista com todos os registros da tabela.
-     *
-     * @return
-     */
     public List<T> retornarLista() {
+        EntityManager entityManager = getEntityManager();
         String jpql = "SELECT t FROM " + classe.getName() + " t";
         TypedQuery<T> query = entityManager.createQuery(jpql, classe);
         try {
-            List<T> lista = query.getResultList();
-            return lista;
+            return query.getResultList();
         } catch (PersistenceException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao retornar consulta: " + e.getMessage());
             return Collections.emptyList();
+        } finally {
+            entityManager.close();
         }
     }
 

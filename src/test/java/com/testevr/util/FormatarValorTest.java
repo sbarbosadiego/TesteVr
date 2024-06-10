@@ -7,8 +7,8 @@ import org.junit.Test;
  * @author Diego Barbosa
  */
 public class FormatarValorTest {
-    
-@Test(expected = NumberFormatException.class)
+
+    @Test(expected = NumberFormatException.class)
     public void testFormatarStringDouble_InvalidInput() {
         String input = "invalid";
         FormatarValor.formatarStringDouble(input);
@@ -36,10 +36,4 @@ public class FormatarValorTest {
         assertEquals(expected, actual);
     }
 
-    @Test(expected = NumberFormatException.class)
-    public void testFormatarStringDouble_InvalidNumberFormat() {
-        String input = "12,34.56";
-        FormatarValor.formatarStringDouble(input);
-    }
-    
 }

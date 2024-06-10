@@ -1,10 +1,12 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package com.testevr.view;
 
 import com.testevr.controller.ClienteController;
 import com.testevr.model.ClienteModel;
 import com.testevr.util.FormatarValor;
-import java.text.NumberFormat;
-import java.time.LocalDate;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 
@@ -14,9 +16,7 @@ import javax.swing.JOptionPane;
 public class ClienteView extends javax.swing.JFrame {
 
     // Data
-    LocalDate dataAtual = LocalDate.now();
     Locale localeBR = new Locale("pt", "BR");
-    NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
 
     // Cliente
     ClienteModel clienteModel = new ClienteModel();
@@ -115,34 +115,33 @@ public class ClienteView extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnSalvarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCancelarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jtfIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(107, 107, 107)
+                        .addComponent(btnSalvarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(254, 254, 254))
-                            .addComponent(jtfNomeCliente)))
+                        .addComponent(btnCancelarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jtfLimiteCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jsDiaFechamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jtfIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jtfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jtfLimiteCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jsDiaFechamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +189,6 @@ public class ClienteView extends javax.swing.JFrame {
     private void btnSalvarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarClienteActionPerformed
         if (mainView.editarSalvar.equals("salvar")) {
             salvarCliente();
-            dispose();
             mainView.setEnabled(true);
         } else if (mainView.editarSalvar.equals("editar")) {
             editarCliente();
@@ -250,8 +248,8 @@ public class ClienteView extends javax.swing.JFrame {
         if (jtfNomeCliente.getText().isEmpty() || jtfLimiteCliente.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo vazio!", "ATENÇÃO",
                     JOptionPane.WARNING_MESSAGE);
-        } else if (jtfNomeCliente.getText().length() >= 100) {
-            JOptionPane.showMessageDialog(null, "Campo nome excede o limite de 50 caracteres!", "ATENÇÃO",
+        } else if (jtfNomeCliente.getText().length() >= 101) {
+            JOptionPane.showMessageDialog(null, "Campo nome excede o limite de 100 caracteres!", "ATENÇÃO",
                     JOptionPane.WARNING_MESSAGE);
         } else {
             clienteModel.setNomeCliente(jtfNomeCliente.getText().toUpperCase());
@@ -262,6 +260,7 @@ public class ClienteView extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso", "ATENÇÃO",
                         JOptionPane.INFORMATION_MESSAGE);
                 mainView.listarClientes();
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Cliente não cadastrado", "ATENÇÃO",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -273,7 +272,7 @@ public class ClienteView extends javax.swing.JFrame {
         if (jtfNomeCliente.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo vazio!", "ATENÇÃO",
                     JOptionPane.WARNING_MESSAGE);
-        } else if (jtfNomeCliente.getText().length() >= 100) {
+        } else if (jtfNomeCliente.getText().length() >= 101) {
             JOptionPane.showMessageDialog(null, "Campo nome excede o limite de 100 caracteres!", "ATENÇÃO",
                     JOptionPane.WARNING_MESSAGE);
         } else {

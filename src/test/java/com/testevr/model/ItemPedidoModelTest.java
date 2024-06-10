@@ -17,14 +17,14 @@ public class ItemPedidoModelTest {
     }
 
     @Test
-    public void testSetQuantidade_ValidQuantity() {
+    public void testSetQuantidadeQuantidadeValida() {
         Double quantidade = 10.0;
         itemPedido.setQuantidade(quantidade);
         assertEquals(quantidade, itemPedido.getQuantidade());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSetQuantidade_NegativeQuantity() {
+    public void testSetQuantidadeQuantidadeNegativa() {
         itemPedido.setQuantidade(-1.0);
     }
 
@@ -41,14 +41,14 @@ public class ItemPedidoModelTest {
     }
 
     @Test
-    public void testSetValorTotal_ValidTotalValue() {
+    public void testSetValorTotalValido() {
         Double valorTotal = 500.0;
         itemPedido.setValorTotal(valorTotal);
         assertEquals(valorTotal, itemPedido.getValorTotal());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSetValorTotal_NegativeTotalValue() {
+    public void testSetValorTotalNegativo() {
         itemPedido.setValorTotal(-500.0);
     }
 

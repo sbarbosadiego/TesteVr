@@ -1,6 +1,7 @@
 package com.testevr.dao;
 
 import com.testevr.model.ClienteModel;
+import jakarta.persistence.EntityManager;
 import java.util.List;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;
@@ -16,6 +17,7 @@ public class ClienteDao extends GenericDao<ClienteModel> {
     }
 
     public List<ClienteModel> retornarListaClienteNome(String nome) {
+        EntityManager entityManager = getEntityManager();
         try {
             List<ClienteModel> listaClientes = entityManager
                     .createQuery("SELECT u FROM clientes u WHERE u.nomeCliente LIKE :nome", ClienteModel.class)
@@ -31,6 +33,7 @@ public class ClienteDao extends GenericDao<ClienteModel> {
     }
 
     public ClienteModel retornarClienteNome(String nome) {
+        EntityManager entityManager = getEntityManager();
         ClienteModel clienteModel = new ClienteModel();
         try {
             clienteModel = entityManager
