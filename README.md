@@ -25,6 +25,6 @@ Na primeira execução deve estar habilitado criar as entidadades mapeadas pelo 
 ```
 Em seguida criar uma base de dados com o seguinte nome teste_vr
 <pre>
-CREATE SCHEMA teste_vr;
+CREATE DATABASE teste_vr;
 </pre>
 A após isso pode ser executado o projeto, com o mapeamento feito através do JPA/Hibernate, as tabelas e seus relacionamentos serão configurados automaticamente.
