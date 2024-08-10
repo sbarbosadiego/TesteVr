@@ -391,11 +391,11 @@ public class MainView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Cód. Produto", "Descrição", "Quantidade", "Valor Estoque"
+                "Cód. Produto", "Descrição", "Quantidade", "Valor Unitário", "Valor Estoque"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -405,7 +405,9 @@ public class MainView extends javax.swing.JFrame {
         jScrollPane6.setViewportView(jtbEstoque);
         if (jtbEstoque.getColumnModel().getColumnCount() > 0) {
             jtbEstoque.getColumnModel().getColumn(1).setPreferredWidth(400);
-            jtbEstoque.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jtbEstoque.getColumnModel().getColumn(2).setPreferredWidth(90);
+            jtbEstoque.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jtbEstoque.getColumnModel().getColumn(4).setPreferredWidth(150);
         }
 
         btnEditarEstoque.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -1054,6 +1056,7 @@ public class MainView extends javax.swing.JFrame {
                 listaEstoqueModel.get(c).getProduto().getCodigoProduto(),
                 listaEstoqueModel.get(c).getProduto().getDescricaoProduto(),
                 listaEstoqueModel.get(c).getQuantidade(),
+                valorReal.format(listaEstoqueModel.get(c).getProduto().getValorProduto()),
                 valorReal.format(listaEstoqueModel.get(c).getProduto().getValorProduto() * listaEstoqueModel.get(c).getQuantidade())
             });
         }
@@ -1143,7 +1146,7 @@ public class MainView extends javax.swing.JFrame {
         int contador = jtbEstoque.getRowCount();
         NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
         for (int i = 0; i < contador; i++) {
-            String valorString = jtbEstoque.getValueAt(i, 3).toString();
+            String valorString = jtbEstoque.getValueAt(i, 4).toString();
             try {
                 Number number = valorReal.parse(valorString);
                 valor = number.doubleValue();
