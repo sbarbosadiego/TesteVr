@@ -16,11 +16,7 @@ import javax.swing.JOptionPane;
 /**
  * @author Diego Barbosa
  */
-public class ProdutoView extends javax.swing.JFrame {
-
-    // Data
-    Locale localeBR = new Locale("pt", "BR");
-    NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
+public class EstoqueView extends javax.swing.JFrame {
 
     // Produto
     ProdutoModel produtoModel = new ProdutoModel();
@@ -36,12 +32,12 @@ public class ProdutoView extends javax.swing.JFrame {
     /**
      * Creates new form CursoView
      */
-    public ProdutoView(MainView mainView) {
+    public EstoqueView(MainView mainView) {
         initComponents();
         this.mainView = mainView;
     }
 
-    public ProdutoView() {
+    public EstoqueView() {
 
     }
 
@@ -55,24 +51,24 @@ public class ProdutoView extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        btnSalvarProduto = new javax.swing.JButton();
+        btnSalvarProdutoEstoque = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jtfIdProduto = new javax.swing.JTextField();
         jtfNomeProduto = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnCancelarProduto = new javax.swing.JButton();
-        jtfValorProduto = new javax.swing.JFormattedTextField();
+        jtfQuantidadeProduto = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Produto");
         setResizable(false);
 
-        btnSalvarProduto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnSalvarProduto.setText("Salvar");
-        btnSalvarProduto.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvarProdutoEstoque.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnSalvarProdutoEstoque.setText("Salvar");
+        btnSalvarProdutoEstoque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarProdutoActionPerformed(evt);
+                btnSalvarProdutoEstoqueActionPerformed(evt);
             }
         });
 
@@ -87,6 +83,7 @@ public class ProdutoView extends javax.swing.JFrame {
             }
         });
 
+        jtfNomeProduto.setEditable(false);
         jtfNomeProduto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jtfNomeProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,7 +95,7 @@ public class ProdutoView extends javax.swing.JFrame {
         jLabel2.setText("Nome:");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel3.setText("Preço:");
+        jLabel3.setText("Quantidade:");
 
         btnCancelarProduto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCancelarProduto.setText("Cancelar");
@@ -108,8 +105,8 @@ public class ProdutoView extends javax.swing.JFrame {
             }
         });
 
-        jtfValorProduto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-        jtfValorProduto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jtfQuantidadeProduto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        jtfQuantidadeProduto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -131,10 +128,10 @@ public class ProdutoView extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jtfValorProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)))
+                            .addComponent(jtfQuantidadeProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(195, 195, 195)
-                        .addComponent(btnSalvarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSalvarProdutoEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancelarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -151,10 +148,10 @@ public class ProdutoView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtfNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtfIdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfValorProduto, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jtfQuantidadeProduto, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalvarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalvarProdutoEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28))
         );
@@ -174,14 +171,9 @@ public class ProdutoView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSalvarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarProdutoActionPerformed
-        if (mainView.editarSalvar.equals("salvar")) {
-            salvarProduto();
-            mainView.setEnabled(true);
-        } else if (mainView.editarSalvar.equals("editar")) {
-            editarProduto();
-        }
-    }//GEN-LAST:event_btnSalvarProdutoActionPerformed
+    private void btnSalvarProdutoEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarProdutoEstoqueActionPerformed
+        editarProduto();
+    }//GEN-LAST:event_btnSalvarProdutoEstoqueActionPerformed
 
     private void jtfIdProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfIdProdutoActionPerformed
         // TODO add your handling code here:
@@ -213,88 +205,63 @@ public class ProdutoView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProdutoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EstoqueView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProdutoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EstoqueView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProdutoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EstoqueView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProdutoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EstoqueView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProdutoView().setVisible(true);
+                new EstoqueView().setVisible(true);
             }
         });
     }
 
-    private void salvarProduto() {
-        if (jtfNomeProduto.getText().isEmpty() || jtfValorProduto.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Campo vazio!", "ATENÇÃO",
-                    JOptionPane.WARNING_MESSAGE);
-        } else if (jtfNomeProduto.getText().length() >= 151) {
-            JOptionPane.showMessageDialog(null, "Campo descrição excede o limite de 150 caracteres!", "ATENÇÃO",
-                    JOptionPane.WARNING_MESSAGE);
-        } else {
-            produtoModel.setDescricaoProduto(jtfNomeProduto.getText().toUpperCase());
-            produtoModel.setValorProduto(FormatarValor.formatarStringDouble(jtfValorProduto.getText()));
-            if (produtoController.salvarProdutoController(produtoModel) > 0) {
-                estoqueModel.setProduto(produtoModel);
-                estoqueController.salvarEstoqueController(estoqueModel);
-                JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso", "ATENÇÃO",
-                        JOptionPane.INFORMATION_MESSAGE);
-                mainView.listarProdutos();
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Produto não cadastrado", "ATENÇÃO",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-
     private void editarProduto() {
-        if (jtfNomeProduto.getText().isEmpty() || jtfValorProduto.getText().isEmpty()) {
+        if (jtfQuantidadeProduto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo vazio!", "ATENÇÃO",
                     JOptionPane.WARNING_MESSAGE);
-        } else if (jtfNomeProduto.getText().length() >= 150) {
-            JOptionPane.showMessageDialog(null, "Campo descrição excede o limite de 150 caracteres!", "ATENÇÃO",
-                    JOptionPane.WARNING_MESSAGE);
         } else {
-            produtoModel.setDescricaoProduto(jtfNomeProduto.getText().toUpperCase());
-            produtoModel.setValorProduto(FormatarValor.formatarStringDouble(jtfValorProduto.getText()));
-            if (produtoController.atualizarProdutoController(produtoModel)) {
-                JOptionPane.showMessageDialog(null, "Produto atualizado com sucesso", "ATENÇÃO",
+            estoqueModel.setQuantidade(Integer.parseInt(jtfQuantidadeProduto.getText()));
+            if (estoqueController.atualizarEstoqueController(estoqueModel)) {
+                JOptionPane.showMessageDialog(null, "Estoque atualizado com sucesso", "ATENÇÃO",
                         JOptionPane.INFORMATION_MESSAGE);
-                mainView.listarProdutos();
+                mainView.listarEstoque();
                 dispose();
                 mainView.setEnabled(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Não foi possível atualizar o produto", "ATENÇÃO",
+                JOptionPane.showMessageDialog(null, "Não foi possível atualizar o estoque", "ATENÇÃO",
                         JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
 
-    public void setProdutoModel(ProdutoModel produto) {
+    public void setEstoqueModel(EstoqueModel estoque, ProdutoModel produto) {
+        this.estoqueModel = estoque;
         this.produtoModel = produto;
         jtfIdProduto.setText(this.produtoModel.getCodigoProduto().toString());
         jtfNomeProduto.setText(this.produtoModel.getDescricaoProduto());
-        jtfValorProduto.setText(produtoModel.getValorProduto().toString());
+        jtfQuantidadeProduto.setText(estoqueModel.getQuantidade().toString());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarProduto;
-    private javax.swing.JButton btnSalvarProduto;
+    private javax.swing.JButton btnSalvarProdutoEstoque;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jtfIdProduto;
     private javax.swing.JTextField jtfNomeProduto;
-    private javax.swing.JFormattedTextField jtfValorProduto;
+    private javax.swing.JFormattedTextField jtfQuantidadeProduto;
     // End of variables declaration//GEN-END:variables
 }

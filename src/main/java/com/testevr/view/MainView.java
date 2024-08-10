@@ -9,10 +9,12 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.testevr.controller.ClienteController;
+import com.testevr.controller.EstoqueController;
 import com.testevr.controller.ItemPedidoController;
 import com.testevr.controller.PedidoController;
 import com.testevr.controller.ProdutoController;
 import com.testevr.model.ClienteModel;
+import com.testevr.model.EstoqueModel;
 import com.testevr.model.PedidoModel;
 import com.testevr.model.ProdutoModel;
 import com.testevr.util.FormatarData;
@@ -24,6 +26,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Locale;
@@ -49,6 +52,11 @@ public class MainView extends javax.swing.JFrame {
     ProdutoController produtoController = new ProdutoController();
     ArrayList<ProdutoModel> listaProdutoModel = new ArrayList<>();
 
+    // Estoque
+    EstoqueModel estoqueModel = new EstoqueModel();
+    EstoqueController estoqueController = new EstoqueController();
+    ArrayList<EstoqueModel> listaEstoqueModel = new ArrayList<>();
+
     // Pedido
     PedidoModel pedidoModel = new PedidoModel();
     PedidoController pedidoController = new PedidoController();
@@ -68,6 +76,7 @@ public class MainView extends javax.swing.JFrame {
         initComponents();
         listarClientes();
         listarProdutos();
+        listarEstoque();
         listarPedidos();
     }
 
@@ -101,6 +110,16 @@ public class MainView extends javax.swing.JFrame {
         btnPesquisarProduto = new javax.swing.JButton();
         btnNovoProduto = new javax.swing.JButton();
         btnExcluirProduto = new javax.swing.JButton();
+        telaEstoque = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jtbEstoque = new javax.swing.JTable();
+        btnEditarEstoque = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jtfPesquisarEstoque = new javax.swing.JTextField();
+        btnAtualizarTabelaEstoque = new javax.swing.JButton();
+        btnPesquisarEstoque = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jtfValorTotalEstoque = new javax.swing.JTextField();
         telaPedido = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jtbPedidos = new javax.swing.JTable();
@@ -131,7 +150,7 @@ public class MainView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Cliente", "Dia de Fechamento", "Limite de Compra"
+                "Cód. Cliente", "Cliente", "Dia de Fechamento", "Limite de Compra"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -252,7 +271,7 @@ public class MainView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Descrição", "Preço"
+                "Cód. Produto", "Descrição", "Preço"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -365,6 +384,117 @@ public class MainView extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Produto", telaProduto);
+
+        jtbEstoque.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jtbEstoque.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cód. Produto", "Descrição", "Quantidade", "Valor Estoque"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(jtbEstoque);
+        if (jtbEstoque.getColumnModel().getColumnCount() > 0) {
+            jtbEstoque.getColumnModel().getColumn(1).setPreferredWidth(400);
+            jtbEstoque.getColumnModel().getColumn(2).setPreferredWidth(100);
+        }
+
+        btnEditarEstoque.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnEditarEstoque.setText("Editar");
+        btnEditarEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarEstoqueActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel4.setText("Pesquisar:");
+
+        jtfPesquisarEstoque.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jtfPesquisarEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfPesquisarEstoqueActionPerformed(evt);
+            }
+        });
+
+        btnAtualizarTabelaEstoque.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnAtualizarTabelaEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/refresh.png"))); // NOI18N
+        btnAtualizarTabelaEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarTabelaEstoqueActionPerformed(evt);
+            }
+        });
+
+        btnPesquisarEstoque.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        btnPesquisarEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/search.png"))); // NOI18N
+        btnPesquisarEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarEstoqueActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel6.setText("Valor Total Estoque:");
+
+        jtfValorTotalEstoque.setEditable(false);
+        jtfValorTotalEstoque.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        javax.swing.GroupLayout telaEstoqueLayout = new javax.swing.GroupLayout(telaEstoque);
+        telaEstoque.setLayout(telaEstoqueLayout);
+        telaEstoqueLayout.setHorizontalGroup(
+            telaEstoqueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telaEstoqueLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(telaEstoqueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE)
+                    .addGroup(telaEstoqueLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfPesquisarEstoque)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPesquisarEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAtualizarTabelaEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(telaEstoqueLayout.createSequentialGroup()
+                        .addComponent(btnEditarEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addGap(5, 5, 5)
+                        .addComponent(jtfValorTotalEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        telaEstoqueLayout.setVerticalGroup(
+            telaEstoqueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telaEstoqueLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(telaEstoqueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jtfPesquisarEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAtualizarTabelaEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisarEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(telaEstoqueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnEditarEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(telaEstoqueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(telaEstoqueLayout.createSequentialGroup()
+                            .addGap(1, 1, 1)
+                            .addComponent(jtfValorTotalEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(11, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Estoque", telaEstoque);
 
         jtbPedidos.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jtbPedidos.setModel(new javax.swing.table.DefaultTableModel(
@@ -673,6 +803,23 @@ public class MainView extends javax.swing.JFrame {
         visualizarPedido();
     }//GEN-LAST:event_btnVisualizarActionPerformed
 
+    private void btnEditarEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarEstoqueActionPerformed
+        editarEstoque();
+    }//GEN-LAST:event_btnEditarEstoqueActionPerformed
+
+    private void jtfPesquisarEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfPesquisarEstoqueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfPesquisarEstoqueActionPerformed
+
+    private void btnAtualizarTabelaEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarTabelaEstoqueActionPerformed
+        listarEstoque();
+        jtfPesquisarCliente.setText("");
+    }//GEN-LAST:event_btnAtualizarTabelaEstoqueActionPerformed
+
+    private void btnPesquisarEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarEstoqueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPesquisarEstoqueActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -762,6 +909,29 @@ public class MainView extends javax.swing.JFrame {
             produtoView.setProdutoModel(produtoModel);
             this.setEnabled(false);
             produtoView.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Nenhum registro selecionado");
+            e.printStackTrace();
+        }
+    }
+
+    private void editarEstoque() {
+        int linha = jtbEstoque.getSelectedRow();
+        try {
+            Long codigoEstoqueProduto = (Long) jtbProduto.getValueAt(linha, 0);
+            estoqueModel = estoqueController.retornarEstoqueController(codigoEstoqueProduto);
+            Long codigoProduto = (Long) jtbProduto.getValueAt(linha, 0);
+            produtoModel = produtoController.retornarProdutoController(codigoProduto);
+            EstoqueView estoqueView = new EstoqueView(this);
+            estoqueView.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    setEnabled(true);
+                }
+            });
+            estoqueView.setEstoqueModel(estoqueModel, produtoModel);
+            this.setEnabled(false);
+            estoqueView.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Nenhum registro selecionado");
             e.printStackTrace();
@@ -872,6 +1042,24 @@ public class MainView extends javax.swing.JFrame {
         }
     }
 
+    public void listarEstoque() {
+        listaEstoqueModel = (ArrayList<EstoqueModel>) estoqueController.retornarListaEstoquesController();
+        listaEstoqueModel.sort(Comparator.comparing(EstoqueModel::getCodigoEstoque));
+        DefaultTableModel tabela = (DefaultTableModel) jtbEstoque.getModel();
+        tabela.setNumRows(0);
+
+        int contador = listaEstoqueModel.size();
+        for (int c = 0; c < contador; c++) {
+            tabela.addRow(new Object[]{
+                listaEstoqueModel.get(c).getProduto().getCodigoProduto(),
+                listaEstoqueModel.get(c).getProduto().getDescricaoProduto(),
+                listaEstoqueModel.get(c).getQuantidade(),
+                valorReal.format(listaEstoqueModel.get(c).getProduto().getValorProduto() * listaEstoqueModel.get(c).getQuantidade())
+            });
+        }
+        somaValorTotalEstoque();
+    }
+
     public void listarPedidos() {
         listaPedidos = (ArrayList<PedidoModel>) pedidoController.retornarListaPedidosController();
         DefaultTableModel tabela = (DefaultTableModel) jtbPedidos.getModel();
@@ -950,11 +1138,31 @@ public class MainView extends javax.swing.JFrame {
         }
     }
 
+    private void somaValorTotalEstoque() {
+        double somaTotal = 0, valor;
+        int contador = jtbEstoque.getRowCount();
+        NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
+        for (int i = 0; i < contador; i++) {
+            String valorString = jtbEstoque.getValueAt(i, 3).toString();
+            try {
+                Number number = valorReal.parse(valorString);
+                valor = number.doubleValue();
+                somaTotal += valor;
+            } catch (ParseException e) {
+                System.out.println("Erro ao converter o valor: " + e.getMessage());
+            }
+        }
+        jtfValorTotalEstoque.setText(valorReal.format(somaTotal));
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizarTabelaCliente;
+    private javax.swing.JButton btnAtualizarTabelaEstoque;
     private javax.swing.JButton btnAtualizarTabelaPedidos;
     private javax.swing.JButton btnAtualizarTabelaProduto;
     private javax.swing.JButton btnEditarCliente;
+    private javax.swing.JButton btnEditarEstoque;
     private javax.swing.JButton btnEditarProduto;
     private javax.swing.JButton btnExcluirCliente;
     private javax.swing.JButton btnExcluirPedido;
@@ -963,30 +1171,38 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton btnNovoPedido;
     private javax.swing.JButton btnNovoProduto;
     private javax.swing.JButton btnPesquisarCliente;
+    private javax.swing.JButton btnPesquisarEstoque;
     private javax.swing.JButton btnPesquisarPedido;
     private javax.swing.JButton btnPesquisarProduto;
     private javax.swing.JButton btnVisualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JComboBox<String> jcbFiltroPedido;
     private javax.swing.JTable jtbCliente;
+    private javax.swing.JTable jtbEstoque;
     private javax.swing.JTable jtbPedidos;
     private javax.swing.JTable jtbProduto;
     private javax.swing.JTextField jtfPesquisarCliente;
+    private javax.swing.JTextField jtfPesquisarEstoque;
     private javax.swing.JTextField jtfPesquisarPedido;
     private javax.swing.JTextField jtfPesquisarProduto;
+    private javax.swing.JTextField jtfValorTotalEstoque;
     private javax.swing.JMenuItem menuGitHub;
     private javax.swing.JMenuItem menuLinkedIn;
     private javax.swing.JCheckBoxMenuItem menuModoEscuro;
     private javax.swing.JPanel telaCliente;
+    private javax.swing.JPanel telaEstoque;
     private javax.swing.JPanel telaPedido;
     private javax.swing.JPanel telaProduto;
     // End of variables declaration//GEN-END:variables

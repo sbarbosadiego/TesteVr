@@ -673,6 +673,8 @@ public class PedidoView extends javax.swing.JFrame {
 
     private void editarQuantidadeProdutoTabela() {
         int linha = jtProdutos.getSelectedRow();
+        Long codigoProduto = (Long) jtProdutos.getValueAt(linha, 0);
+        produtoModel = produtoController.retornarProdutoController(codigoProduto);
         DefaultTableModel modeloCadastro = (DefaultTableModel) jtProdutos.getModel();
         NumberFormat valorReal = NumberFormat.getCurrencyInstance(localeBR);
         int quantidade = Integer.parseInt(jtProdutos.getValueAt(linha, 2).toString());
