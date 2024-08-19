@@ -22,6 +22,9 @@ public class ProdutoModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pk_codigo_produto")
     private Long codigoProduto;
+    
+    @Column(name = "codigo_ean", unique = true, length = 13)
+    private String codigoEAN;
 
     @Column(name = "descricao_produto", length = 150, nullable = false)
     private String descricaoProduto;

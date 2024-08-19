@@ -271,11 +271,11 @@ public class MainView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Cód. Produto", "Descrição", "Preço"
+                "Cód. Produto", "EAN", "Descrição", "Preço"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -285,8 +285,8 @@ public class MainView extends javax.swing.JFrame {
         jScrollPane4.setViewportView(jtbProduto);
         if (jtbProduto.getColumnModel().getColumnCount() > 0) {
             jtbProduto.getColumnModel().getColumn(0).setPreferredWidth(30);
-            jtbProduto.getColumnModel().getColumn(1).setPreferredWidth(400);
-            jtbProduto.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jtbProduto.getColumnModel().getColumn(2).setPreferredWidth(400);
+            jtbProduto.getColumnModel().getColumn(3).setPreferredWidth(100);
         }
 
         btnEditarProduto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -1038,6 +1038,7 @@ public class MainView extends javax.swing.JFrame {
         for (int c = 0; c < contador; c++) {
             tabela.addRow(new Object[]{
                 listaProdutoModel.get(c).getCodigoProduto(),
+                listaProdutoModel.get(c).getCodigoEAN(),
                 listaProdutoModel.get(c).getDescricaoProduto(),
                 valorReal.format(listaProdutoModel.get(c).getValorProduto())
             });
