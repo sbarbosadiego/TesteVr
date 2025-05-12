@@ -141,9 +141,9 @@
                           <Component id="btnAtualizarTabelaCliente" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                           <Component id="btnPesquisarCliente" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" min="-2" pref="500" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" pref="500" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnEditarCliente" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btnNovoCliente" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -333,9 +333,9 @@
                           <Component id="btnAtualizarTabelaProduto" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                           <Component id="btnPesquisarProduto" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane4" min="-2" pref="500" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane4" pref="500" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnEditarProduto" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btnNovoProduto" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -524,9 +524,9 @@
                           <Component id="btnAtualizarTabelaEstoque" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                           <Component id="btnPesquisarEstoque" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane6" min="-2" pref="500" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane6" pref="500" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="btnEditarEstoque" min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -686,9 +686,8 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane5" alignment="0" pref="885" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -700,16 +699,16 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnAtualizarTabelaPedidos" min="-2" pref="50" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jScrollPane5" alignment="0" pref="885" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="btnNovoPedido" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnExcluirPedido" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnVisualizar" min="-2" pref="120" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -724,9 +723,9 @@
                           <Component id="btnPesquisarPedido" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                           <Component id="jcbFiltroPedido" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane5" min="-2" pref="500" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane5" pref="500" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnNovoPedido" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btnExcluirPedido" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
